@@ -9,6 +9,7 @@ import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.exception.NoDataFoundException;
 import uci.capstone.invictus.exception.UserNotFoundException;
 import uci.capstone.invictus.repository.UserRepository;
+import uci.capstone.invictus.utils.Constants;
 
 @Service
 public class UserService {
@@ -28,9 +29,43 @@ public class UserService {
         repository.save(user);
     }
 
-    public User findUserByFirstName(String firstName){
+    public List<User> findUsersByFirstName(String firstName){
 
-        return repository.findByFirstName(firstName)
-                .orElseThrow(() -> new UserNotFoundException("First Name", firstName));
+        List<User> users = repository.findByFirstName(firstName);
+        if(users.isEmpty())
+            throw new UserNotFoundException("First Name", firstName);
+        return users;
+    }
+
+    public List<User> findUsersBySecondName(String secondName){
+
+        List<User> users = repository.findBySecondName(secondName);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Second Name", secondName);
+        return users;
+    }
+
+    public List<User> findUsersByLocation(String location){
+
+        List<User> users = repository.findByLocation(location);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Location", location);
+        return users;
+    }
+
+    public List<User> findUsersByTypeOfSeeker(Constants.Seeker seeker){
+
+        List<User> users = repository.findByTypeOfSeeker(seeker);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Type Of Seeker", seeker.toString());
+        return users;
+    }
+
+    public List<User> findUsersByLanguage(String language){
+
+        List<User> users = repository.findByLanguages(language);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Languages", language);
+        return users;
     }
 }

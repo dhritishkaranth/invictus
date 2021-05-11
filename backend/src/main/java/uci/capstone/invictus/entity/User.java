@@ -14,14 +14,6 @@ import javax.persistence.*;
 @ToString
 public class User {
 
-    public enum Seeker {
-        Patient, Caregiver;
-    }
-
-    public enum YesNo {
-        Yes, No;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -37,7 +29,7 @@ public class User {
 
     @Column(name = "typeofseeker")
     @Enumerated(EnumType.STRING)
-    private Seeker typeOfSeeker;
+    private  Constants.Seeker typeOfSeeker;
 
     @Column(name = "typeofillness")
     private String typeOfIllness;
@@ -47,7 +39,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String firstName, String secondName, String languages, String location, Seeker typeOfSeeker, String typeOfIllness, boolean anonymous) {
+    public User(Long id, String firstName, String secondName, String languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -98,11 +90,11 @@ public class User {
         this.location = location;
     }
 
-    public Seeker getTypeOfSeeker() {
+    public  Constants.Seeker getTypeOfSeeker() {
         return typeOfSeeker;
     }
 
-    public void setTypeOfSeeker(Seeker typeOfSeeker) {
+    public void setTypeOfSeeker( Constants.Seeker typeOfSeeker) {
         this.typeOfSeeker = typeOfSeeker;
     }
 
