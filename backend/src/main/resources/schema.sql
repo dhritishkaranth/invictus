@@ -10,5 +10,5 @@ CREATE TABLE users(id serial PRIMARY KEY,
         languages VARCHAR(255),
         location VARCHAR(255),
         typeOfIllness VARCHAR(255),
-        typeOfSeeker seeker,
-        anonymous yesno);
+        typeOfSeeker VARCHAR(255),
+        anonymous BOOLEAN);

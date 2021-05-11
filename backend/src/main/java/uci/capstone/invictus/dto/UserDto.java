@@ -1,54 +1,31 @@
-package uci.capstone.invictus.entity;
+package uci.capstone.invictus.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import uci.capstone.invictus.utils.Constants;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "users")
 @Setter
 @Getter
+@NoArgsConstructor
 @ToString
-public class User {
+public class UserDto {
 
-    public enum Seeker {
-        Patient, Caregiver;
-    }
-
-    public enum YesNo {
-        Yes, No;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "firstname")
     private String firstName;
 
-    @Column(name = "secondname")
     private String secondName;
     private String languages;
 
     private String location;
 
-    @Column(name = "typeofseeker")
-    @Enumerated(EnumType.STRING)
-    private Seeker typeOfSeeker;
+    private String typeOfSeeker;
 
-    @Column(name = "typeofillness")
     private String typeOfIllness;
 
     private boolean anonymous;
 
-    public User() {
-    }
-
-    public User(Long id, String firstName, String secondName, String languages, String location, Seeker typeOfSeeker, String typeOfIllness, boolean anonymous) {
-        this.id = id;
+    public UserDto(String firstName, String secondName, String languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.languages = languages;
@@ -56,14 +33,6 @@ public class User {
         this.typeOfSeeker = typeOfSeeker;
         this.typeOfIllness = typeOfIllness;
         this.anonymous = anonymous;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -98,11 +67,11 @@ public class User {
         this.location = location;
     }
 
-    public Seeker getTypeOfSeeker() {
+    public String getTypeOfSeeker() {
         return typeOfSeeker;
     }
 
-    public void setTypeOfSeeker(Seeker typeOfSeeker) {
+    public void setTypeOfSeeker(String typeOfSeeker) {
         this.typeOfSeeker = typeOfSeeker;
     }
 
