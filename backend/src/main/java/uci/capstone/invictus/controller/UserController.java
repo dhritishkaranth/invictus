@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import uci.capstone.invictus.dto.UserDto;
 import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.service.UserService;
-import uci.capstone.invictus.utils.Constants;
 
 import java.util.List;
 import java.util.stream.Collectors;

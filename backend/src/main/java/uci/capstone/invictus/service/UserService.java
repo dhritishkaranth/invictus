@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uci.capstone.invictus.entity.User;
+import uci.capstone.invictus.exception.NoDataFoundException;
+import uci.capstone.invictus.exception.UserNotFoundException;
 import uci.capstone.invictus.repository.UserRepository;
 
 @Service
@@ -15,7 +17,11 @@ public class UserService {
     private UserRepository repository;
 
     public List<User> findAllUsers() {
-        return repository.findAll();
+
+        List<User> users = repository.findAll();
+        if(users.isEmpty())
+            throw new NoDataFoundException();
+        return users;
     }
 
     public void createUser(User user){
@@ -24,10 +30,7 @@ public class UserService {
 
     public User findUserByFirstName(String firstName){
 
-        Optional<User> user = repository.findByFirstName(firstName);
-        if(user.isPresent()){
-            return user.get();
-        }
-        return null;
-   }
+        return repository.findByFirstName(firstName)
+                .orElseThrow(() -> new UserNotFoundException("First Name", firstName));
+    }
 }
