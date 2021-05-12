@@ -28,15 +28,15 @@ const Step1 = (props) => {
 					<Form.Control required type="text" placeholder="Enter first name" name="firstName"></Form.Control>
 					<Form.Text muted>Please enter only Latin characters.</Form.Text>
 				</Form.Group>
-
+				<hr/>
 				<Form.Group>
 					<Form.Label>Last name</Form.Label>
 					<Form.Control required type="text" placeholder="Enter last name" name="lastName"></Form.Control>
 					<Form.Text muted>Please enter only Latin characters.</Form.Text>
 				</Form.Group>
-
+				<hr/>
 				<Form.Group>
-					<Form.Label>Gender</Form.Label>
+					<Form.Label class="col-md-4">Gender</Form.Label>
 					<Form.Control required as="select" custom name="gender">
 						<option value="" selected disabled>Please choose one</option>
 						<option value="male">Male</option>
@@ -45,6 +45,7 @@ const Step1 = (props) => {
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
+				<hr/>
 				<div class="button-align">
 					<Button variant="primary" class="btn-toolbar" disabled>Back</Button>{'      '}
 					<Button variant="primary" type="submit" class="btn-toolbar">Next</Button>
@@ -75,12 +76,12 @@ const Step2 = (props) => {
 			<ProgressBar now={33}/>
 				<Form.Group>
 					<Form.Label>City</Form.Label>
-					<Form.Control required type="text" placeholder="Enter city" name="city"></Form.Control>
-					<Form.Text muted>Enter the city or town you are living in.</Form.Text>
+					<Form.Control required type="text" placeholder="Enter city" name="Enter city"></Form.Control>
+					<Form.Text muted></Form.Text>
 				</Form.Group>
-
+				<hr/>
 				<Form.Group>
-					<Form.Label>State</Form.Label>
+					<Form.Label class="col-md-4">State</Form.Label>
 					<Form.Control required as="select" custom name="state">
 						<option value="" selected disabled>Please choose one</option>
 						<option value="CA">California</option>
@@ -91,11 +92,11 @@ const Step2 = (props) => {
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
-
+				<hr/>
 				<Form.Group>
-					<Form.Label>Languages</Form.Label>
+					<Form.Label class="col-md-5">Languages</Form.Label>
 					<Form.Control multiple required as="select" custom name="lang">
-						<option value="" selected disabled>Please choose at least one</option>
+						<option value="" selected disabled>Pick at least one</option>
 						<option value="en">English</option>
 						<option value="es">Spanish</option>
 						<option value="fr">French</option>
@@ -103,6 +104,7 @@ const Step2 = (props) => {
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
+				<hr/>
 				<div class="button-align">
 					<Button variant="primary" class="btn-toolbar" onClick={() => props.previousStep()}>Back</Button>{' '}
 					<Button variant="primary" type="submit" class="btn-toolbar">Next</Button>
@@ -129,22 +131,24 @@ const Step3 = (props) => {
 			<h2>You are in step 3</h2>
 			<Form onSubmit={submitHandler} id="step3form" name="step3form">
 			<ProgressBar now={66}/>
+			<hr/>
 				<Form.Group>
-					<Form.Label>Illnesses</Form.Label>
+					<Form.Label class="col-md-4">Illnesses</Form.Label>
 					<Form.Control multiple required as="select" custom name="illness">
 						<option value="" selected disabled>Please choose one</option>
 						<option value="leukemia">Leukemia</option>
 						<option value="cancer">Cancer</option>
-						<option value="other">Nevada</option>
+						<option value="other">Other</option>
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
-
+				<hr/>
 				<Form.Group>
 					<Form.Label>Stay anonymous</Form.Label>
-					<Form.Check type="checkbox" name="anonymous" label="Stay anonymous?"/>
+					<Form.Check type="checkbox" name="anonymous" label="Don't allow others to find me"/>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
+				<hr/>
 				<div class="button-align">
 					<Button variant="primary" class="btn-toolbar" onClick={() => props.previousStep()}>Back</Button>{' '}
 					<Button variant="primary" type="submit" class="btn-toolbar">Next</Button>
