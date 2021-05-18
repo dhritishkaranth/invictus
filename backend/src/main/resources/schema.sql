@@ -7,7 +7,7 @@ CREATE TYPE seeker AS ENUM ('Patient', 'Caregiver');
 CREATE TABLE users(id serial PRIMARY KEY,
         firstname VARCHAR(255),
         secondname VARCHAR(255),
-        languages VARCHAR(255),
+        languages text[],
         location VARCHAR(255),
         typeOfIllness VARCHAR(255),
         typeOfSeeker VARCHAR(255),

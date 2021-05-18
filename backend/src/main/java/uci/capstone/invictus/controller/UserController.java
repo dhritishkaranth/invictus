@@ -29,7 +29,7 @@ public class UserController {
         List<User> users = userService.findAllUsers();
 
         return users.stream()
-                .filter(user -> !user.getAnonymous())
+                .filter(user -> !user.isAnonymous())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -48,7 +48,7 @@ public class UserController {
         List<User> users = userService.findUsersByFirstName(name);
 
         return users.stream()
-                .filter(user -> !user.getAnonymous())
+                .filter(user -> !user.isAnonymous())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -60,7 +60,7 @@ public class UserController {
         List<User> users = userService.findUsersBySecondName(name);
 
         return users.stream()
-                .filter(user -> !user.getAnonymous())
+                .filter(user -> !user.isAnonymous())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -72,7 +72,7 @@ public class UserController {
         List<User> users = userService.findUsersByLocation(location);
 
         return users.stream()
-                .filter(user -> !user.getAnonymous())
+                .filter(user -> !user.isAnonymous())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -84,7 +84,7 @@ public class UserController {
         List<User> users = userService.findUsersByTypeOfSeeker(Constants.Seeker.valueOf(seeker));
 
         return users.stream()
-                .filter(user -> !user.getAnonymous())
+                .filter(user -> !user.isAnonymous())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -95,7 +95,7 @@ public class UserController {
     public List<UserDto> getUsersByLanguages(@PathVariable String language) {
         List<User> users = userService.findUsersByLanguage(language);
         return users.stream()
-                .filter(user -> !user.getAnonymous())
+                .filter(user -> !user.isAnonymous())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
