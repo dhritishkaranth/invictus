@@ -1,17 +1,30 @@
 package uci.capstone.invictus.entity;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 import uci.capstone.invictus.utils.Constants;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Setter
 @Getter
 @ToString
+@NoArgsConstructor
+@TypeDefs({
+        @TypeDef(
+                name = "list-array",
+                typeClass = ListArrayType.class
+        )
+})
 public class User {
 
     @Id
@@ -23,7 +36,13 @@ public class User {
 
     @Column(name = "secondname")
     private String secondName;
-    private String languages;
+
+    @Type(type = "list-array")
+    @Column(
+            name = "languages",
+            columnDefinition = "text[]"
+    )
+    private List<String> languages;
 
     private String location;
 
@@ -36,10 +55,7 @@ public class User {
 
     private boolean anonymous;
 
-    public User() {
-    }
-
-    public User(Long id, String firstName, String secondName, String languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous) {
+    public User(Long id, String firstName, String secondName, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -47,70 +63,6 @@ public class User {
         this.location = location;
         this.typeOfSeeker = typeOfSeeker;
         this.typeOfIllness = typeOfIllness;
-        this.anonymous = anonymous;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSecondName() {
-        return secondName;
-    }
-
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
-
-    public String getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(String languages) {
-        this.languages = languages;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public  Constants.Seeker getTypeOfSeeker() {
-        return typeOfSeeker;
-    }
-
-    public void setTypeOfSeeker( Constants.Seeker typeOfSeeker) {
-        this.typeOfSeeker = typeOfSeeker;
-    }
-
-    public String getTypeOfIllness() {
-        return typeOfIllness;
-    }
-
-    public void setTypeOfIllness(String typeOfIllness) {
-        this.typeOfIllness = typeOfIllness;
-    }
-
-    public boolean getAnonymous() {
-        return anonymous;
-    }
-
-    public void setAnonymous(boolean anonymous) {
         this.anonymous = anonymous;
     }
 }

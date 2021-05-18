@@ -1,9 +1,13 @@
 package uci.capstone.invictus.entity;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +18,12 @@ import java.util.List;
 @Getter
 @ToString
 @NoArgsConstructor
+@TypeDefs({
+        @TypeDef(
+                name = "list-array",
+                typeClass = ListArrayType.class
+        )
+})
 public class Group {
 
     @Id
@@ -25,7 +35,7 @@ public class Group {
 
     private String location;
 
-    @ElementCollection
+    @Type(type = "list-array")
     @Column(
             name = "languages",
             columnDefinition = "text[]"
@@ -35,12 +45,13 @@ public class Group {
     @Column(name = "typeofillness")
     private String typeOfIllness;
 
-    @ElementCollection
+    @Type(type = "list-array")
     @Column(
             name = "resources",
             columnDefinition = "text[]"
     )
     private List<String> resources;
+
 
     public Group(Long id, String groupName, String location, List<String> languages, String typeOfIllness, List<String> resources) {
         this.id = id;
