@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/invictus/v1")
+@RequestMapping("/invictus/v1/users")
 public class UserController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/users")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<UserDto> getAllUsers() {
@@ -34,14 +34,14 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/users")
+    @PostMapping()
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody UserDto userDto) {
         userService.createUser(convertToEntity(userDto));
     }
 
-    @GetMapping("/users/firstname/{name}")
+    @GetMapping("/firstname/{name}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<UserDto> getUsersByFirstName(@PathVariable String name) {
@@ -53,7 +53,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/users/secondname/{name}")
+    @GetMapping("/secondname/{name}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<UserDto> getUsersBySecondName(@PathVariable String name) {
@@ -65,7 +65,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/users/location/{location}")
+    @GetMapping("/location/{location}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<UserDto> getUsersByLocation(@PathVariable String location) {
@@ -77,7 +77,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/users/typeofseeker/{seeker}")
+    @GetMapping("/typeofseeker/{seeker}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<UserDto> getUsersByTypeOfSeeker(@PathVariable String seeker) {
@@ -89,7 +89,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/users/languages/{language}")
+    @GetMapping("/languages/{language}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<UserDto> getUsersByLanguages(@PathVariable String language) {
@@ -98,6 +98,13 @@ public class UserController {
                 .filter(user -> !user.isAnonymous())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void updateUser(@RequestBody UserDto userDto){
+        userService.update(convertToEntity(userDto));
     }
 
     private UserDto convertToDto(User user) {

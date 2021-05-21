@@ -102,4 +102,20 @@ public class GroupService {
         }
         return groups;
     }
+
+    public void update(Group newGroup) {
+
+        groupRepository.findByGroupName(newGroup.getGroupName())
+                .map(group -> {
+                    group.setLanguages(newGroup.getLanguages());
+                    group.setLocation(newGroup.getLocation());
+                    group.setTypeOfIllness(newGroup.getTypeOfIllness());
+                    group.setResources(newGroup.getResources());
+
+                    return groupRepository.save(group);
+                })
+                .orElseGet(() -> {
+                    return groupRepository.save(newGroup);
+                });
+    }
 }

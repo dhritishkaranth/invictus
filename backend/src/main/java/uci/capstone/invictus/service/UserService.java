@@ -68,4 +68,23 @@ public class UserService {
             throw new UserNotFoundException("Languages", language);
         return users;
     }
+
+    public void update(User newUser){
+
+        repository.findById(newUser.getId())
+                .map(user -> {
+                    user.setFirstName(newUser.getFirstName());
+                    user.setSecondName(newUser.getSecondName());
+                    user.setAnonymous(newUser.isAnonymous());
+                    user.setTypeOfSeeker(newUser.getTypeOfSeeker());
+                    user.setLanguages(newUser.getLanguages());
+                    user.setLocation(newUser.getLocation());
+                    user.setTypeOfIllness(newUser.getTypeOfIllness());
+                    return repository.save(user);
+                })
+                .orElseGet(() -> {
+                    return repository.save(newUser);
+                });
+    }
+
 }

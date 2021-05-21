@@ -7,12 +7,13 @@ import lombok.ToString;
 
 import java.util.List;
 
-
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
 public class UserDto {
+    private Long id;
+
     private String firstName;
 
     private String secondName;
@@ -27,7 +28,8 @@ public class UserDto {
 
     private boolean anonymous;
 
-    public UserDto(String firstName, String secondName, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous) {
+    public UserDto(Long id, String firstName, String secondName, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous) {
+        this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
         this.languages = languages;
