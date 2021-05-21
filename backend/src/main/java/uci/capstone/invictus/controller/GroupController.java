@@ -114,6 +114,12 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
+    @PutMapping()
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void updateGroup(@RequestBody GroupDto groupDto){
+        groupService.update(convertToEntity(groupDto));
+    }
     private GroupDto convertToDto(Group group) {
         return modelMapper.map(group, GroupDto.class);
     }
