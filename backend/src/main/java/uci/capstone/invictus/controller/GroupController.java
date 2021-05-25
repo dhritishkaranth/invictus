@@ -94,6 +94,20 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/aggregator/illness")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public HashMap<String, Integer> findGroupsByIllness(){
+        return groupService.findIllnessBasedCounts();
+    }
+
+    @GetMapping("/aggregator/location")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public HashMap<String, Integer> findGroupsByLocation(){
+        return groupService.findLocationBasedCounts();
+    }
+
     @GetMapping("illness/{illness}/location/{location}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)

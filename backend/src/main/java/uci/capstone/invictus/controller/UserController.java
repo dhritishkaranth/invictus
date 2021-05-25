@@ -9,6 +9,7 @@ import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.service.UserService;
 import uci.capstone.invictus.utils.Constants;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -100,11 +101,68 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/typeofillness/{illness}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByTypeOfIllness(@PathVariable String illness) {
+        List<User> users = userService.findUsersByTypeOfIllness(illness);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/anonymous/{flag}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByAnonymous(@PathVariable boolean flag) {
+        List<User> users = userService.findUsersByAnonymity(flag);
+        return users.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/age/{age}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByAge(@PathVariable int age) {
+        List<User> users = userService.findUsersByAge(age);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/gender/{gender}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByGender(@PathVariable String gender) {
+        List<User> users = userService.findUsersByGender(Constants.Gender.valueOf(gender));
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void updateUser(@RequestBody UserDto userDto){
         userService.update(convertToEntity(userDto));
+    }
+
+    @GetMapping("/aggregator/seeker")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public HashMap<String, Integer> getUsersBySeeker() {
+       return userService.findSeekerBasedUserCounts();
+    }
+
+    @GetMapping("/aggregator/illness")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public HashMap<String, Integer> getUsersByIllness() {
+        return userService.findIllnessBasedCounts();
     }
 
     private UserDto convertToDto(User user) {

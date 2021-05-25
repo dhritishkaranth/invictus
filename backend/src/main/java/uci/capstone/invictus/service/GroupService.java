@@ -103,6 +103,22 @@ public class GroupService {
         return groups;
     }
 
+    public HashMap<String, Integer> findIllnessBasedCounts(){
+
+        HashMap<String, Integer> map = new HashMap<>();
+        groupRepository.findTotalNumberOfGroupsByIllness()
+                .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return map;
+    }
+
+    public HashMap<String, Integer> findLocationBasedCounts(){
+
+        HashMap<String, Integer> map = new HashMap<>();
+        groupRepository.findTotalNumberOfGroupsByLocation()
+                .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return map;
+    }
+
     public void update(Group newGroup) {
 
         groupRepository.findByGroupName(newGroup.getGroupName())

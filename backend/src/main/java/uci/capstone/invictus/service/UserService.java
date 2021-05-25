@@ -1,10 +1,12 @@
 package uci.capstone.invictus.service;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uci.capstone.invictus.entity.Pair;
 import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.exception.NoDataFoundException;
 import uci.capstone.invictus.exception.UserNotFoundException;
@@ -67,6 +69,54 @@ public class UserService {
         if(users.isEmpty())
             throw new UserNotFoundException("Languages", language);
         return users;
+    }
+
+    public List<User> findUsersByTypeOfIllness(String illness){
+
+        List<User> users = repository.findByTypeOfIllness(illness);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Type of Illness", illness);
+        return users;
+    }
+
+    public List<User> findUsersByAnonymity(boolean flag){
+
+        List<User> users = repository.findByAnonymous(flag);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Anonymous", String.valueOf(flag));
+        return users;
+    }
+
+    public List<User> findUsersByAge(int age){
+
+        List<User> users = repository.findByAge(age);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Age", String.valueOf(age));
+        return users;
+    }
+
+    public List<User> findUsersByGender(Constants.Gender gender){
+
+        List<User> users = repository.findByGender(gender);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Gender", gender.toString());
+        return users;
+    }
+
+    public HashMap<String, Integer> findSeekerBasedUserCounts(){
+
+        HashMap<String, Integer> map = new HashMap<>();
+        repository.findTotalOfUsersBySeeker()
+                .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return map;
+    }
+
+    public HashMap<String, Integer> findIllnessBasedCounts(){
+
+        HashMap<String, Integer> map = new HashMap<>();
+        repository.findTotalOfUsersByIllness()
+                .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return map;
     }
 
     public void update(User newUser){

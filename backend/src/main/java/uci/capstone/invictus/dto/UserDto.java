@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import uci.capstone.invictus.utils.Constants;
 
 import java.util.List;
 
@@ -28,7 +29,11 @@ public class UserDto {
 
     private boolean anonymous;
 
-    public UserDto(Long id, String firstName, String secondName, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous) {
+    private int age;
+
+    private Constants.Gender gender;
+
+    public UserDto(Long id, String firstName, String secondName, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -37,6 +42,8 @@ public class UserDto {
         this.typeOfSeeker = typeOfSeeker;
         this.typeOfIllness = typeOfIllness;
         this.anonymous = anonymous;
+        this.age = age;
+        this.gender = gender;
     }
 }
 

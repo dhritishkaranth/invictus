@@ -55,7 +55,13 @@ public class User {
 
     private boolean anonymous;
 
-    public User(Long id, String firstName, String secondName, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous) {
+    private int age;
+
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Constants.Gender gender;
+
+    public User(Long id, String firstName, String secondName, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -64,6 +70,8 @@ public class User {
         this.typeOfSeeker = typeOfSeeker;
         this.typeOfIllness = typeOfIllness;
         this.anonymous = anonymous;
+        this.age = age;
+        this.gender = gender;
     }
 }
 
