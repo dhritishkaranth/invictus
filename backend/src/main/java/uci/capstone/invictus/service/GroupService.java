@@ -6,6 +6,7 @@ import uci.capstone.invictus.entity.Group;
 import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.exception.GroupNotFoundException;
 import uci.capstone.invictus.exception.NoDataFoundException;
+import uci.capstone.invictus.exception.RepositoryException;
 import uci.capstone.invictus.exception.UserNotFoundException;
 import uci.capstone.invictus.repository.GroupRepository;
 import uci.capstone.invictus.repository.UserRepository;
@@ -42,13 +43,18 @@ public class GroupService {
     }
 
     public void save(Group group){
-        groupRepository.save(group);
+        try {
+            groupRepository.save(group);
+        }
+        catch (Exception e){
+            throw new RepositoryException(e.getLocalizedMessage());
+        }
     }
 
-    public List<Group> findMatchedGroups(long id) {
+    public List<Group> findMatchedGroups(String username) {
 
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User ID", String.valueOf(id)));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User Name", username));
 
         String languages = user.getLanguages().stream().collect(Collectors.joining(",", "{", "}"));
 
@@ -101,6 +107,22 @@ public class GroupService {
             throw new GroupNotFoundException("Illness-" + illness , "Language-" + language);
         }
         return groups;
+    }
+
+    public HashMap<String, Integer> findIllnessBasedCounts(){
+
+        HashMap<String, Integer> map = new HashMap<>();
+        groupRepository.findTotalNumberOfGroupsByIllness()
+                .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return map;
+    }
+
+    public HashMap<String, Integer> findLocationBasedCounts(){
+
+        HashMap<String, Integer> map = new HashMap<>();
+        groupRepository.findTotalNumberOfGroupsByLocation()
+                .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return map;
     }
 
     public void update(Group newGroup) {

@@ -37,6 +37,8 @@ public class User {
     @Column(name = "secondname")
     private String secondName;
 
+    private String username;
+
     @Type(type = "list-array")
     @Column(
             name = "languages",
@@ -55,15 +57,24 @@ public class User {
 
     private boolean anonymous;
 
-    public User(Long id, String firstName, String secondName, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous) {
+    private int age;
+
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Constants.Gender gender;
+
+    public User(Long id, String firstName, String secondName, String username, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
+        this.username = username;
         this.languages = languages;
         this.location = location;
         this.typeOfSeeker = typeOfSeeker;
         this.typeOfIllness = typeOfIllness;
         this.anonymous = anonymous;
+        this.age = age;
+        this.gender = gender;
     }
 }
 

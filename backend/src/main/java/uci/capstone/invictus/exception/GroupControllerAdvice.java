@@ -23,7 +23,7 @@ public class GroupControllerAdvice extends ResponseEntityExceptionHandler {
             GroupNotFoundException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().toString());
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
@@ -35,7 +35,7 @@ public class GroupControllerAdvice extends ResponseEntityExceptionHandler {
             HttpStatus status, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDate.now());
+        body.put("timestamp", LocalDate.now().toString());
         body.put("status", status.value());
 
         List<String> errors = ex.getBindingResult()

@@ -46,7 +46,7 @@ public class GroupController {
         return convertToDto(groupService.findByGroupName(groupname));
     }
 
-    @GetMapping("/language/{lang}")
+    @GetMapping("/languages/{lang}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<GroupDto> getGroupByLanguage(@PathVariable String lang) {
@@ -64,11 +64,11 @@ public class GroupController {
         groupService.save(convertToEntity(groupDto));
     }
 
-    @GetMapping("/bestmatch/{id}")
+    @GetMapping("/bestmatch/{username}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<GroupDto> getMatchedGroups(@PathVariable long id){
-        List<Group> groups = groupService.findMatchedGroups(id);
+    public List<GroupDto> getMatchedGroups(@PathVariable String username){
+        List<Group> groups = groupService.findMatchedGroups(username);
         return groups.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -92,6 +92,20 @@ public class GroupController {
         return groups.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/aggregator/illness")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public HashMap<String, Integer> findGroupsByIllness(){
+        return groupService.findIllnessBasedCounts();
+    }
+
+    @GetMapping("/aggregator/location")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public HashMap<String, Integer> findGroupsByLocation(){
+        return groupService.findLocationBasedCounts();
     }
 
     @GetMapping("illness/{illness}/location/{location}")
