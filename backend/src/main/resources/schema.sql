@@ -11,6 +11,7 @@ CREATE TYPE gender AS ENUM ('Male', 'Female');
 CREATE TABLE users(id serial PRIMARY KEY,
         firstname VARCHAR(255),
         secondname VARCHAR(255),
+        username VARCHAR(255) UNIQUE,
         age int,
         gender VARCHAR(255),
         languages text[],

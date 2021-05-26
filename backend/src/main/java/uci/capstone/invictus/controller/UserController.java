@@ -165,6 +165,13 @@ public class UserController {
         return userService.findIllnessBasedCounts();
     }
 
+    @GetMapping("/username/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public UserDto getUsersByIllness(@PathVariable String username) {
+         return convertToDto(userService.findByUsername(username));
+    }
+
     private UserDto convertToDto(User user) {
         return modelMapper.map(user, UserDto.class);
     }

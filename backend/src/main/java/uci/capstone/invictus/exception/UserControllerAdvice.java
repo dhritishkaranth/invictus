@@ -24,7 +24,7 @@ public class UserControllerAdvice extends ResponseEntityExceptionHandler {
             UserNotFoundException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().toString());
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
@@ -35,10 +35,21 @@ public class UserControllerAdvice extends ResponseEntityExceptionHandler {
             NoDataFoundException ex, WebRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
+        body.put("timestamp", LocalDateTime.now().toString());
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RepositoryException.class)
+    public ResponseEntity<Object> handleRepositoryException(
+            RepositoryException ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now().toString());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
     @Override

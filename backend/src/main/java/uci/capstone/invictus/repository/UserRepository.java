@@ -8,6 +8,7 @@ import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.utils.Constants;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -19,6 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByTypeOfSeeker(Constants.Seeker seeker);
     List<User> findByAnonymous(boolean anonymity);
     List<User> findByAge(int age);
+    Optional<User> findByUsername(String username);
 
     List<User> findByGender(Constants.Gender gender);
 

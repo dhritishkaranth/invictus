@@ -2,6 +2,7 @@ package uci.capstone.invictus.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import uci.capstone.invictus.entity.Pair;
 import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.exception.NoDataFoundException;
+import uci.capstone.invictus.exception.RepositoryException;
 import uci.capstone.invictus.exception.UserNotFoundException;
 import uci.capstone.invictus.repository.UserRepository;
 import uci.capstone.invictus.utils.Constants;
@@ -28,7 +30,12 @@ public class UserService {
     }
 
     public void createUser(User user){
-        repository.save(user);
+        try {
+            repository.save(user);
+        }
+        catch(Exception e){
+            throw new RepositoryException(e.getMessage());
+        }
     }
 
     public List<User> findUsersByFirstName(String firstName){
@@ -109,6 +116,18 @@ public class UserService {
         repository.findTotalOfUsersBySeeker()
                 .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
         return map;
+    }
+
+    public User findByUsername(String username){
+        Optional<User> user;
+        try {
+            user = repository.findByUsername(username);
+        }
+        catch(Exception e){
+            throw new RepositoryException(e.getMessage());
+        }
+
+        return user.orElseThrow(() -> new UserNotFoundException("username", username));
     }
 
     public HashMap<String, Integer> findIllnessBasedCounts(){

@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class UserDto {
-    private Long id;
-
     private String firstName;
 
     private String secondName;
+
+    private String username;
 
     private List<String> languages;
 
@@ -33,10 +33,10 @@ public class UserDto {
 
     private Constants.Gender gender;
 
-    public UserDto(Long id, String firstName, String secondName, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender) {
-        this.id = id;
+    public UserDto(String firstName, String secondName, String username, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender) {
         this.firstName = firstName;
         this.secondName = secondName;
+        this.username = username;
         this.languages = languages;
         this.location = location;
         this.typeOfSeeker = typeOfSeeker;
