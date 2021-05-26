@@ -61,10 +61,7 @@ public class GroupService {
         List<Group> groups = groupRepository.findBestMatchedGroups(user.getTypeOfIllness(), languages, user.getLocation());
 
         if (groups.isEmpty())
-            groups = groupRepository.findByTypeOfIllnessAndLocationOrLanguages(user.getTypeOfIllness(), languages, user.getLocation());
-
-        if (groups.isEmpty())
-            throw new GroupNotFoundException("No groups available for the user", user.getFirstName());
+            throw new GroupNotFoundException("No best recommended groups available for the user", user.getFirstName());
 
         return groups;
     }
