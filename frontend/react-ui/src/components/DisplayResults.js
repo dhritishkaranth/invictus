@@ -1,7 +1,7 @@
 import {React, useState, useEffect, useRef} from "react";
 import axios from "axios";
 import getLatLongFromAddress from "./getLatLongFromAddress.js";
-import mapStyles from "./CustomMapStyles";
+import mapStyles from "../resources/CustomMapStyles";
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
