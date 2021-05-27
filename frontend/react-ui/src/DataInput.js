@@ -1,6 +1,7 @@
 import StepWizard from "react-step-wizard";
 import {ProgressBar, Button, Form} from "react-bootstrap";
 import {useState} from "react";
+import axios from "axios";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -140,7 +141,6 @@ const Step3 = (props) => {
 		props.onCompleteHandler(newData);
 		console.log("Step 3 completed", newData);
 		props.nextStep();
-		//<Form.Check type="checkbox" name="anonymous" label="Don't allow others to find me"/>
 	}
 
 	const onToggleChange = (checked) => {
@@ -180,12 +180,10 @@ const Step3 = (props) => {
 }
 
 const Step4 = (props) => {
-	const [curState, setState] = useState({});
-
+	
 	const submitHandler = (event) => {
 		event.preventDefault();
 		props.onCompleteHandler();
-		//<Form.Check type="checkbox" name="anonymous" label="Don't allow others to find me"/>
 	}
 
 	return (
@@ -226,6 +224,7 @@ function DataInput() {
 	const submitHandler = () => {
 		console.log("Step 4 handler from parent");
 		console.log(s1, s2, s3);
+		axios.post("https://enbrivgmjobza.x.pipedream.net", {...s1, ...s2, ...s3}).then(res => console.log("POST req. done", res));
 	}
 
 	return (
