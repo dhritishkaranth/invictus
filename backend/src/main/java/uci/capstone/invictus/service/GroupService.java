@@ -99,9 +99,9 @@ public class GroupService {
     }
 
     public List<Group> findByIllnessAndLanguage(String illness, String language){
-        List<Group> groups = groupRepository.findByIllnessAndLanguage(illness, language);
+        List<Group> groups = groupRepository.findByIllnessAndLanguage(illness, "{" + language + "}");
         if (groups.isEmpty()) {
-            throw new GroupNotFoundException("Illness-" + illness , "Language-" + language);
+            throw new GroupNotFoundException("Illness-" + illness , "Language-" + "{" + language + "}");
         }
         return groups;
     }
