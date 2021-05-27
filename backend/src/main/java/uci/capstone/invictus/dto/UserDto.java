@@ -33,7 +33,9 @@ public class UserDto {
 
     private Constants.Gender gender;
 
-    public UserDto(String firstName, String secondName, String username, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender) {
+    private List<String> resources;
+
+    public UserDto(String firstName, String secondName, String username, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender, List<String> resources) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.username = username;
@@ -44,6 +46,7 @@ public class UserDto {
         this.anonymous = anonymous;
         this.age = age;
         this.gender = gender;
+        this.resources = resources;
     }
 }
 
