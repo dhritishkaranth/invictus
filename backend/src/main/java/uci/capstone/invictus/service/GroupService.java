@@ -29,16 +29,17 @@ public class GroupService {
 
     public List<Group> findAllGroups(){
         List<Group> groups = groupRepository.findAll();
-        if(groups.isEmpty())
+        /*if(groups.isEmpty())
             throw new NoDataFoundException();
+         */
         return groups;
     }
 
     public List<Group> findByGroupLanguage(String language) {
         List<Group> groups = groupRepository.findByLanguages(language);
-        if (groups.isEmpty()) {
+        /*if (groups.isEmpty()) {
             throw new GroupNotFoundException("group language", language);
-        }
+        }*/
         return groups;
     }
 
@@ -60,49 +61,51 @@ public class GroupService {
 
         List<Group> groups = groupRepository.findBestMatchedGroups(user.getTypeOfIllness(), languages, user.getLocation());
 
-        if (groups.isEmpty())
+        /*if (groups.isEmpty())
             throw new GroupNotFoundException("No best recommended groups available for the user", user.getFirstName());
-
+*/
         return groups;
     }
 
     public List<Group> findByTypeOfIllnessAndLocation(String illness, String location){
         List<Group> groups = groupRepository.findByTypeOfIllnessAndLocation(illness, location);
-        if (groups.isEmpty()) {
+
+        /*if (groups.isEmpty()) {
             throw new GroupNotFoundException("Illness:" + illness + "and", "Location:" + location);
-        }
+        }*/
         return groups;
     }
 
     public List<Group> findByIllness(String illness){
         List<Group> groups = groupRepository.findByTypeOfIllness(illness);
-        if (groups.isEmpty()) {
+        /*if (groups.isEmpty()) {
             throw new GroupNotFoundException("Illness", illness);
-        }
+        }*/
         return groups;
     }
 
     public List<Group> findByLocation(String location){
         List<Group> groups = groupRepository.findByLocation(location);
-        if (groups.isEmpty()) {
+        /*if (groups.isEmpty()) {
             throw new GroupNotFoundException("Location", location);
-        }
+        }*/
         return groups;
     }
 
     public List<Group> findByIllnessAndLocation(String illness, String location){
         List<Group> groups = groupRepository.findByTypeOfIllnessAndLocation(illness, location);
-        if (groups.isEmpty()) {
+       /* if (groups.isEmpty()) {
             throw new GroupNotFoundException("Illness-" + illness, "Location-" + location);
-        }
+        }*/
         return groups;
     }
 
     public List<Group> findByIllnessAndLanguage(String illness, String language){
         List<Group> groups = groupRepository.findByIllnessAndLanguage(illness, "{" + language + "}");
-        if (groups.isEmpty()) {
+
+        /*if (groups.isEmpty()) {
             throw new GroupNotFoundException("Illness-" + illness , "Language-" + "{" + language + "}");
-        }
+        }*/
         return groups;
     }
 
