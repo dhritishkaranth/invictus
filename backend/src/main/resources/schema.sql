@@ -18,7 +18,8 @@ CREATE TABLE users(id serial PRIMARY KEY,
         location VARCHAR(255),
         typeOfIllness VARCHAR(255),
         typeOfSeeker VARCHAR(255),
-        anonymous BOOLEAN);
+        anonymous BOOLEAN,
+        resources text[]);
 
 CREATE TABLE groups(id serial PRIMARY KEY,
         groupname VARCHAR(255) UNIQUE,

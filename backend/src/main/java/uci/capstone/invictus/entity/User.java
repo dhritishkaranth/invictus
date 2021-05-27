@@ -63,7 +63,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Constants.Gender gender;
 
-    public User(Long id, String firstName, String secondName, String username, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender) {
+    @Type(type = "list-array")
+    @Column(
+            name = "resources",
+            columnDefinition = "text[]"
+    )
+    private List<String> resources;
+
+    public User(Long id, String firstName, String secondName, String username, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender, List<String> resources) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -75,6 +82,7 @@ public class User {
         this.anonymous = anonymous;
         this.age = age;
         this.gender = gender;
+        this.resources = resources;
     }
 }
 
