@@ -128,6 +128,27 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
+
+    @GetMapping("illness/{illness}/language/")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public List<GroupDto> findGroupByIllnessAndAnyLanguage(@PathVariable String illness){
+        List<Group> groups = groupService.findByIllness(illness);
+        return groups.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("illness/{illness}/location/")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public List<GroupDto> findGroupByIllnessAndAnyLocation(@PathVariable String illness){
+        List<Group> groups = groupService.findByIllness(illness);
+        return groups.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

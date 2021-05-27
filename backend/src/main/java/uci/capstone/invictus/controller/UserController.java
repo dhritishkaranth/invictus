@@ -133,6 +133,40 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/illness/{illness}/seeker/{seeker}/language/{language}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByIllnessLanguageSeeker(@PathVariable String illness, @PathVariable String seeker,  @PathVariable String language) {
+        List<User> users = userService.findByIllnessAndLanguagesAndSeeker(illness, language, seeker);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/illness/{illness}/seeker/{seeker}/language/")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByIllnessAnyLanguageSeeker(@PathVariable String illness, @PathVariable String seeker) {
+        List<User> users = userService.findByIllnessAndSeeker(illness, seeker);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/illness/{illness}/seeker/{seeker}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByIllnessSeeker(@PathVariable String illness, @PathVariable String seeker) {
+        List<User> users = userService.findByIllnessAndSeeker(illness, seeker);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+
     @GetMapping("/gender/{gender}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

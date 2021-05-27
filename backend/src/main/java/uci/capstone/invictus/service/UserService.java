@@ -118,6 +118,21 @@ public class UserService {
         return map;
     }
 
+    public List<User> findByIllnessAndLanguagesAndSeeker(String illness, String language, String seeker){
+        List<User> users = repository.findByIllnessAndLanguageAndTypeOfSeeker(illness, "{" + language + "}", seeker);
+        if(users.isEmpty())
+            throw new UserNotFoundException("Illness-" + illness , "Language-" + language + "Seeker-" + seeker);
+        return users;
+    }
+
+    public List<User> findByIllnessAndSeeker(String illness, String seeker){
+
+        List<User> users = repository.findByTypeOfIllnessAndTypeOfSeeker(illness, Constants.Seeker.valueOf(seeker));
+        if(users.isEmpty())
+            throw new UserNotFoundException("Illness-" + illness , "Seeker-" + seeker);
+        return users;
+    }
+
     public User findByUsername(String username){
         Optional<User> user;
         try {

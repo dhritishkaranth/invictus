@@ -31,7 +31,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
     @Query(value = "SELECT * FROM groups WHERE typeofillness=?1 AND (languages && CAST(?2 AS text[]) OR location=?3)", nativeQuery = true)
     List<Group> findByTypeOfIllnessAndLocationOrLanguages(String illness, String languages, String location);
 
-    @Query(value = "SELECT * FROM groups WHERE typeofillness=?1 AND ?2=ANY(languages)", nativeQuery = true)
+    @Query(value = "SELECT * FROM groups WHERE typeofillness=?1 AND (CAST(?2 AS text[]) && languages)", nativeQuery = true)
     List<Group> findByIllnessAndLanguage(String illness, String languages);
 
     @Query(value = "SELECT typeofillness as key, count(groups.*) as value from groups group by typeofillness order by value desc limit 5", nativeQuery = true)
