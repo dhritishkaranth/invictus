@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uci.capstone.invictus.entity.Pair;
 import uci.capstone.invictus.entity.User;
-import uci.capstone.invictus.exception.NoDataFoundException;
 import uci.capstone.invictus.exception.RepositoryException;
 import uci.capstone.invictus.exception.UserNotFoundException;
 import uci.capstone.invictus.repository.UserRepository;
@@ -129,6 +128,23 @@ public class UserService {
     public List<User> findByIllnessAndSeeker(String illness, String seeker){
 
         List<User> users = repository.findByTypeOfIllnessAndTypeOfSeeker(illness, Constants.Seeker.valueOf(seeker));
+        /*if(users.isEmpty())
+            throw new UserNotFoundException("Illness-" + illness , "Seeker-" + seeker);*/
+        return users;
+    }
+
+    public List<User> findByIllnessAndLanguage(String illness, String language){
+
+        List<User> users = repository.findByTypeOfIllnessAndLanguages(illness, "{"+language+"}");
+        /*if(users.isEmpty())
+            throw new UserNotFoundException("Illness-" + illness , "Seeker-" + seeker);*/
+        return users;
+    }
+
+
+    public List<User> findBySeekerAndLanguage(String seeker, String language){
+
+        List<User> users = repository.findBySeekerAndLanguages(seeker, "{" + language + "}");
         /*if(users.isEmpty())
             throw new UserNotFoundException("Illness-" + illness , "Seeker-" + seeker);*/
         return users;
