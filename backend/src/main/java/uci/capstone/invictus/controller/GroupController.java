@@ -2,6 +2,7 @@ package uci.capstone.invictus.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.service.GroupService;
 import uci.capstone.invictus.service.UserService;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -57,7 +59,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping()
+    @PostMapping("/admin")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public void saveGroup(@RequestBody GroupDto groupDto){
@@ -108,7 +110,7 @@ public class GroupController {
         return groupService.findLocationBasedCounts();
     }
 
-    @GetMapping("illness/{illness}/location/{location}")
+    @GetMapping("/illness/{illness}/location/{location}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> findGroupByIllnessAndLocation(@PathVariable String illness, @PathVariable String location){
@@ -118,7 +120,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("illness/{illness}/language/{language}")
+    @GetMapping("/illness/{illness}/language/{language}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> findGroupByIllnessAndLanguage(@PathVariable String illness, @PathVariable String language){
@@ -129,7 +131,7 @@ public class GroupController {
     }
 
 
-    @GetMapping("illness/{illness}/language/")
+    @GetMapping("/illness/{illness}/language/")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> findGroupByIllnessAndAnyLanguage(@PathVariable String illness){
@@ -139,7 +141,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("illness/language/{language}")
+    @GetMapping("/illness/language/{language}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> findGroupByAnyIllnessAndLanguage(@PathVariable String language){
@@ -149,7 +151,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("illness/language/")
+    @GetMapping("/illness/language/")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> findGroupByAny(){
@@ -159,7 +161,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("illness/{illness}/location/")
+    @GetMapping("/illness/{illness}/location/")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> findGroupByIllnessAndAnyLocation(@PathVariable String illness){
@@ -169,7 +171,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping()
+    @PutMapping("/admin")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void updateGroup(@RequestBody GroupDto groupDto){
