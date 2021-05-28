@@ -155,6 +155,72 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/illness/{illness}/seeker/language/{language}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByIllnessAnyLanguage(@PathVariable String illness, @PathVariable String language) {
+        List<User> users = userService.findByIllnessAndLanguage(illness, language);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/illness/{illness}/seeker/language/")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByIllnessOnly(@PathVariable String illness) {
+        List<User> users = userService.findUsersByTypeOfIllness(illness);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/illness/seeker/language/{language}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByLanguagesOnly(@PathVariable String language) {
+        List<User> users = userService.findUsersByLanguage(language);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/illness/seeker/{seeker}/language/")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersBySeekerOnly(@PathVariable String seeker) {
+        List<User> users = userService.findUsersByTypeOfSeeker(Constants.Seeker.valueOf(seeker));
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/illness/seeker/language/")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersByAnything() {
+        List<User> users = userService.findAllUsers();
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/illness/seeker/{seeker}/language/{language}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserDto> getUsersBySeekerLanguage(@PathVariable String seeker, @PathVariable String language) {
+        List<User> users = userService.findBySeekerAndLanguage(seeker, language);
+        return users.stream()
+                .filter(user -> !user.isAnonymous())
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/illness/{illness}/seeker/{seeker}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
