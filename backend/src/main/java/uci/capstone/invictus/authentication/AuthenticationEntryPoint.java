@@ -3,6 +3,7 @@ package uci.capstone.invictus.authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import uci.capstone.invictus.exception.UserNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +17,15 @@ public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx)
             throws IOException {
         response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName());
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+        if(authEx.getMessage().contains("No user found for the query")){
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+        else{
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
         PrintWriter writer = response.getWriter();
-        writer.println("HTTP Status 401 - " + authEx.getMessage());
+        writer.println(authEx.getMessage());
     }
 
     @Override

@@ -9,7 +9,6 @@ import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.service.UserService;
 import uci.capstone.invictus.utils.Constants;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
