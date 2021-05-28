@@ -19,7 +19,10 @@ CREATE TABLE users(id serial PRIMARY KEY,
         typeOfIllness VARCHAR(255),
         typeOfSeeker VARCHAR(255),
         anonymous BOOLEAN,
-        resources text[]);
+        resources text[],
+        password VARCHAR(255),
+        role VARCHAR(255),
+        enabled int);
 
 CREATE TABLE groups(id serial PRIMARY KEY,
         groupname VARCHAR(255) UNIQUE,

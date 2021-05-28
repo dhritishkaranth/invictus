@@ -1,10 +1,7 @@
 package uci.capstone.invictus.entity;
 
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
@@ -19,6 +16,7 @@ import java.util.List;
 @Getter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @TypeDefs({
         @TypeDef(
                 name = "list-array",
@@ -70,19 +68,10 @@ public class User {
     )
     private List<String> resources;
 
-    public User(Long id, String firstName, String secondName, String username, List<String> languages, String location, Constants.Seeker typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender, List<String> resources) {
-        this.id = id;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.username = username;
-        this.languages = languages;
-        this.location = location;
-        this.typeOfSeeker = typeOfSeeker;
-        this.typeOfIllness = typeOfIllness;
-        this.anonymous = anonymous;
-        this.age = age;
-        this.gender = gender;
-        this.resources = resources;
-    }
+    private String password;
+
+    private String role;
+
+    private int enabled;
 }
 
