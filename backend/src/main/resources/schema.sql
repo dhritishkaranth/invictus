@@ -21,8 +21,7 @@ CREATE TABLE users(id serial PRIMARY KEY,
         anonymous BOOLEAN,
         resources text[],
         password VARCHAR(255),
-        role VARCHAR(255),
-        enabled int);
+        role VARCHAR(255));
 
 CREATE TABLE groups(id serial PRIMARY KEY,
         groupname VARCHAR(255) UNIQUE,

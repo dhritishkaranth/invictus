@@ -1,9 +1,6 @@
 package uci.capstone.invictus.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import uci.capstone.invictus.utils.Constants;
 
 import java.util.List;
@@ -11,6 +8,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class UserDto {
     private String firstName;
@@ -34,19 +32,5 @@ public class UserDto {
     private Constants.Gender gender;
 
     private List<String> resources;
-
-    public UserDto(String firstName, String secondName, String username, List<String> languages, String location, String typeOfSeeker, String typeOfIllness, boolean anonymous, int age, Constants.Gender gender, List<String> resources) {
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.username = username;
-        this.languages = languages;
-        this.location = location;
-        this.typeOfSeeker = typeOfSeeker;
-        this.typeOfIllness = typeOfIllness;
-        this.anonymous = anonymous;
-        this.age = age;
-        this.gender = gender;
-        this.resources = resources;
-    }
 }
 

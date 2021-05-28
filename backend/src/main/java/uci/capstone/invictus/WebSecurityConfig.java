@@ -3,6 +3,7 @@ package uci.capstone.invictus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import uci.capstone.invictus.utils.UserDetailsServiceImpl;
+import uci.capstone.invictus.authentication.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -46,12 +47,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
+        http.logout().and().authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/invictus/v1/groups/aggregator/illness/",
+                        "/invictus/v1/groups/aggregator/location/",
+                        "/invictus/v1/groups/aggregator/illness",
+                        "/invictus/v1/groups/aggregator/location"
+                        ).hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/invictus/v1/groups/",
+                        "/invictus/v1/groups"
+                ).hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/invictus/v1/groups/",
+                        "/invictus/v1/groups"
+                ).hasAuthority("ADMIN")
                 .anyRequest().authenticated()
-                .and().httpBasic()
+                .and().csrf().disable()
+                .httpBasic()
                 .authenticationEntryPoint(authEntryPoint);
     }
-
-
-
 }

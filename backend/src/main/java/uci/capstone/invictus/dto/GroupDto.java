@@ -1,12 +1,10 @@
 package uci.capstone.invictus.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
@@ -22,12 +20,4 @@ public class GroupDto{
     private String typeOfIllness;
 
     private List<String> resources;
-
-    public GroupDto(String groupName, String location, List<String> languages, String typeOfIllness, List<String> resources) {
-        this.groupName = groupName;
-        this.location = location;
-        this.languages = languages;
-        this.typeOfIllness = typeOfIllness;
-        this.resources = resources;
-    }
 }

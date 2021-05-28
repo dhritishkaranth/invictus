@@ -1,4 +1,4 @@
-package uci.capstone.invictus.utils;
+package uci.capstone.invictus.authentication;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;

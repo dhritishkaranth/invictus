@@ -1,8 +1,9 @@
-package uci.capstone.invictus.entity;
+package uci.capstone.invictus.authentication;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uci.capstone.invictus.entity.User;
 
 import java.util.Arrays;
 import java.util.Collection;

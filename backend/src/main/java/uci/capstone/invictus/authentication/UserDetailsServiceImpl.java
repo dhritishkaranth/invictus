@@ -1,10 +1,10 @@
-package uci.capstone.invictus.utils;
+package uci.capstone.invictus.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import uci.capstone.invictus.entity.MyUserDetails;
+import uci.capstone.invictus.authentication.MyUserDetails;
 import uci.capstone.invictus.entity.User;
 import uci.capstone.invictus.repository.UserRepository;
 
@@ -20,8 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Optional<User> user = userRepository.findByUsername(username);
 
         if (!user.isPresent()) throw new UsernameNotFoundException("Could not find user");
-
-        System.out.println(user.get().getFirstName());
 
         return new MyUserDetails(user.get());
     }
