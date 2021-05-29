@@ -1,5 +1,6 @@
 import {React, useState, useEffect, useRef} from "react";
 import axios from "axios";
+import {ProgressBar, Button, Form} from "react-bootstrap";
 import getLatLongFromAddress from "./getLatLongFromAddress.js";
 import mapStyles from "../resources/CustomMapStyles";
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
@@ -18,6 +19,8 @@ const MapComponent = (props) => {
 	  };
 
 	useEffect(() => {
+		console.log("useEffect called with props = ", props.locs);
+		setMarkerData({});
 		for (let item of props.locs) {
 			let {location, type, content} = {...item};
 
@@ -39,12 +42,12 @@ const MapComponent = (props) => {
 	
 
 	const onMarkerLoad = (event) => {
-		console.log("Marker placed: ", event);
+		//console.log("Marker placed: ", event);
 		//console.log("state in marker callback: ", data.markers);
 	};
 
 	const onInfoWindowLoad = (event) => {
-		console.log("IW loaded ", event);
+		//console.log("IW loaded ", event);
 	};
 
 	const markerIcons = {
@@ -137,9 +140,55 @@ const Legend = () => {
 	);
 }
 
-function DisplayResults() {
+const SearchComponent = (props) => {
 
-	const data = [
+	let [curState, setState] = useState({illnesses: "", languages: ""});
+
+	const submitHandler = (event) => {
+		event.preventDefault();
+		console.log(event);
+
+		let promise = axios.get(`http://localhost:9091/invictus/v1/groups/illness/${event.target[0].value}/language/${event.target[1].value}/`);
+		promise.then(res => {
+				console.log("Search handler received: ", res.data);
+				props.onSearchHandler(res.data);
+			}
+		);
+	};
+
+	return (
+		<>
+			<Form onSubmit={submitHandler} id="searchParamsForm" name="searchParamsForm">
+				<Form.Group>
+					<Form.Label className="col-md-4">Illness</Form.Label>
+					<Form.Control as="select" custom name="illness">
+						<option value="" selected>Any</option>
+						<option value="Lung Cancer">Lung Cancer</option>
+						<option value="corona">Corona</option>
+						<option value="other">Other</option>
+					</Form.Control>
+					<Form.Text muted></Form.Text>
+				</Form.Group>
+
+				<Form.Group>
+					<Form.Label className="col-md-6">Language</Form.Label>
+					<Form.Control as="select" custom name="language">
+						<option value="" selected>Any</option>
+						<option value="en">English</option>
+						<option value="es">Spanish</option>
+						<option value="hi">Hindi</option>
+						<option value="kn">Kannada</option>
+					</Form.Control>
+					<Form.Text muted></Form.Text>
+				</Form.Group>
+				<Button variant="primary" type="submit" className="btn-toolbar">Search</Button>
+			</Form>
+		</>
+	);
+}
+
+function DisplayResults() {
+	let groups = [
 		{location: "Irvine, CA", type: "group", content: {title: "Kumar's home", body: "aaa"}},
 		{location: "Brahmavar, Udupi, Karnataka", type: "group", content: {title: "My hometown", body: "aaa"}},
 		{location: "Kundapura, Karnataka", type: "group", content: {title: "Shetty Lunch home", body: "aaa"}},
@@ -147,15 +196,36 @@ function DisplayResults() {
 		{location: "Udupi, Karnataka", type: "person", content: {title: "Someone's home", body: "aaa"}},
 		{location: "Baikady, Karnataka", type: "home", content: {title: "My home", body: "aaa"}}
 	];
+	
+	let [groupData, setGroupData] = useState(groups);
+	
+
+	const updateData = (newData) => {
+		let data = [];
+		for (let item of newData) {
+			data.push(
+				{
+					location: item["location"],
+					type: "group", 
+					content: {
+						title: item["groupName"],
+						body: item["resources"][0]
+					}
+				}
+			);
+		}
+		setGroupData(data);
+	};
 
 	return (
 		<>
 		<h1>Display Results</h1>
 		<hr/>
-		<div style={{width: "80%", height: "100%", position: "relative"}}>
-			<MapComponent locs={data} center={{lat: 13.5, lng: 75.0}}/>
+		<div style={{width: "80%", height: "100%"}}>
+			<MapComponent locs={groupData} center={{lat: 13.5, lng: 75.0}}/>
 		</div>
 		<Legend/>
+		<SearchComponent onSearchHandler={updateData}/>
 		</>
 	);
 }
