@@ -71,7 +71,7 @@ public class UserService {
 
     public List<User> findUsersByLanguage(String language){
 
-        List<User> users = repository.findByLanguages(language);
+        List<User> users = repository.findByLanguages("{" + language + "}");
         /*if(users.isEmpty())
             throw new UserNotFoundException("Languages", language);*/
         return users;

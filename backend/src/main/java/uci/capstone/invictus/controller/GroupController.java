@@ -59,7 +59,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/admin")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public void saveGroup(@RequestBody GroupDto groupDto){
@@ -171,7 +171,7 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping("/admin")
+    @PutMapping()
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void updateGroup(@RequestBody GroupDto groupDto){

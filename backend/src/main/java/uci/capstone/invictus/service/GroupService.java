@@ -36,7 +36,7 @@ public class GroupService {
     }
 
     public List<Group> findByGroupLanguage(String language) {
-        List<Group> groups = groupRepository.findByLanguages(language);
+        List<Group> groups = groupRepository.findByLanguages("{" + language + "}");
         /*if (groups.isEmpty()) {
             throw new GroupNotFoundException("group language", language);
         }*/

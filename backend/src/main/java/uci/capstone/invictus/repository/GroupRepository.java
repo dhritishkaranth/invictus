@@ -16,14 +16,14 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     Optional<Group> findByGroupName(String groupName);
 
-    @Query(value = "SELECT * FROM groups WHERE ?1=ANY(languages)", nativeQuery = true)
+    @Query(value = "SELECT * FROM groups WHERE languages && CAST(?1 AS text[])", nativeQuery = true)
     List<Group> findByLanguages(String language);
 
     List<Group> findByTypeOfIllness(String illness);
 
     List<Group> findByLocation(String location);
 
-    @Query(value = "SELECT * FROM groups WHERE typeofillness=?1 and languages && CAST(?2 AS text[]) and location=?3", nativeQuery = true)
+    @Query(value = "SELECT * FROM groups WHERE typeofillness=?1 and (languages && CAST(?2 AS text[])) and location=?3", nativeQuery = true)
     List<Group> findBestMatchedGroups(String illness, String languages, String location);
 
     List<Group> findByTypeOfIllnessAndLocation(String illness, String location);
