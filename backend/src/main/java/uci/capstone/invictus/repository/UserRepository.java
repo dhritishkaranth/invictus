@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByGender(Constants.Gender gender);
 
-    @Query(value = "SELECT * FROM users WHERE ?1=ANY(languages)", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE (CAST(?1 AS text[]) && languages)", nativeQuery = true)
     List<User> findByLanguages(String language);
 
     @Query(value = "SELECT typeofseeker as key, count(users.*) as value from users group by typeofseeker", nativeQuery = true)
@@ -33,16 +33,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT typeofillness as key, count(users.*) as value from users group by typeofillness order by value desc limit 5", nativeQuery = true)
     List<Pair> findTotalOfUsersByIllness();
 
-    @Query(value = "SELECT * FROM users WHERE typeofillness=?1 AND typeofseeker=?3 AND CAST(?2 AS text[]) && languages", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE typeofillness=?1 AND typeofseeker=?3 AND (CAST(?2 AS text[]) && languages)", nativeQuery = true)
     List<User> findByIllnessAndLanguageAndTypeOfSeeker(String illness, String language, String seeker);
 
     List<User> findByTypeOfIllnessAndTypeOfSeeker(String illness, Constants.Seeker  seeker);
 
-    @Query(value = "SELECT * FROM users WHERE typeofillness=?1 AND CAST(?2 AS text[]) && languages", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE typeofillness=?1 AND (CAST(?2 AS text[]) && languages)", nativeQuery = true)
     List<User> findByTypeOfIllnessAndLanguages(String illness, String language);
 
-
-    @Query(value = "SELECT * FROM users WHERE typeofseeker=?1 AND CAST(?2 AS text[]) && languages", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE typeofseeker=?1 AND (CAST(?2 AS text[]) && languages)", nativeQuery = true)
     List<User> findBySeekerAndLanguages(String seeker, String language);
 
 }
