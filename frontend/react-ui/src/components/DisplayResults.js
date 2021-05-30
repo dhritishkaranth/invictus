@@ -1,6 +1,6 @@
 import {React, useState, useEffect, useRef} from "react";
 import axios from "axios";
-import {ProgressBar, Button, Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import getLatLongFromAddress from "./getLatLongFromAddress.js";
 import mapStyles from "../resources/CustomMapStyles";
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
@@ -144,11 +144,16 @@ const SearchComponent = (props) => {
 
 	let [curState, setState] = useState({illnesses: "", languages: ""});
 
+	let info = {username: "ysingh", password: "ysingh"};
+
 	const submitHandler = (event) => {
 		event.preventDefault();
 		console.log(event);
 
-		let promise = axios.get(`http://localhost:9091/invictus/v1/groups/illness/${event.target[0].value}/language/${event.target[1].value}/`);
+		let url = `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/invictus/v1/groups/illness/language/`;
+
+		//let promise = axios.get(`http://localhost:9091/invictus/v1/groups/illness/${event.target[0].value}/language/${event.target[1].value}/`, {auth: info, validateStatus: false});
+		let promise = axios.get(url, {auth: info, validateStatus: false});
 		promise.then(res => {
 				console.log("Search handler received: ", res.data);
 				props.onSearchHandler(res.data);
