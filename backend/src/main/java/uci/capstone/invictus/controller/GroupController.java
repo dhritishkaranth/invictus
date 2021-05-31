@@ -110,6 +110,14 @@ public class GroupController {
         return groupService.findLocationBasedCounts();
     }
 
+    @GetMapping("/aggregator/language")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public HashMap<String, Integer> findGroupsByLanguage(){
+        return groupService.findLanguageBasedCounts();
+    }
+
+
     @GetMapping("/illness/{illness}/location/{location}")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)

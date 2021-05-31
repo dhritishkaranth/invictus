@@ -125,6 +125,14 @@ public class GroupService {
         return map;
     }
 
+    public HashMap<String, Integer> findLanguageBasedCounts(){
+
+        HashMap<String, Integer> map = new HashMap<>();
+        groupRepository.findTotalNumberOfGroupsByLanguage()
+                .forEach(pair -> map.put(pair.getKey(), pair.getValue()));
+        return map;
+    }
+
     public void update(Group newGroup) {
 
         groupRepository.findByGroupName(newGroup.getGroupName())

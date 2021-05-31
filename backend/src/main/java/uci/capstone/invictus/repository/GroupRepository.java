@@ -39,4 +39,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
     @Query(value = "SELECT location as key, count(groups.*) as value from groups group by location order by value desc limit 5", nativeQuery = true)
     List<Pair> findTotalNumberOfGroupsByLocation();
+
+    @Query(value = "SELECT language as key, count(groups.*) as value from groups, unnest(languages) as language group by language", nativeQuery = true)
+    List<Pair> findTotalNumberOfGroupsByLanguage();
 }
