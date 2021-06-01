@@ -2,6 +2,7 @@ import StepWizard from "react-step-wizard";
 import {ProgressBar, Button, Form, Container, Navbar} from "react-bootstrap";
 import {useState} from "react";
 import axios from "axios";
+import NavbarComponent from "./NavbarComponent";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -268,27 +269,15 @@ function DataInput(props) {
 
 	return (
 		<>
-		<Container>
-			<Navbar bg="light" variant="light" >
-			<Navbar.Brand>
-				Invictus
-			</Navbar.Brand>
-			<div>
-				<Navbar.Text>
-					Signed in as: {props.userCredentials["creds"]["username"]}
-				</Navbar.Text>
-				<Button variant="link">Sign out</Button>
-			</div>
-			</Navbar>
-		</Container>
-		<h2>Please fill in the required info to complete your profile.</h2>
-		<hr/>
-		<StepWizard initialStep={1}>
-			<Step1 onCompleteHandler={f1Update}/>
-			<Step2 onCompleteHandler={f2Update}/>
-			<Step3 onCompleteHandler={f3Update}/>
-			<Step4 onCompleteHandler={submitHandler}/>
-		</StepWizard>
+			<NavbarComponent userCredentials={props.userCredentials}/>
+			<h2>Please fill in the required info to complete your profile.</h2>
+			<hr/>
+			<StepWizard initialStep={1}>
+				<Step1 onCompleteHandler={f1Update}/>
+				<Step2 onCompleteHandler={f2Update}/>
+				<Step3 onCompleteHandler={f3Update}/>
+				<Step4 onCompleteHandler={submitHandler}/>
+			</StepWizard>
 		</>
 	);
 }

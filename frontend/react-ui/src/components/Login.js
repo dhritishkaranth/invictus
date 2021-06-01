@@ -1,6 +1,7 @@
 import {React, useState} from "react";
 import {Button, Form, Alert} from "react-bootstrap";
 import axios from "axios";
+import NavbarComponent from "./NavbarComponent";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = (props) => {
@@ -16,7 +17,7 @@ const Login = (props) => {
 			return;
 		}
 		*/
-		
+
 		let info = {username: event.target[0].value, password: event.target[1].value};
 		//let info = {username: "ysingh", password: "ysingh"};
 		console.log("Login event: ", info);
@@ -64,6 +65,7 @@ const Login = (props) => {
 
 	return (
 		<>
+			<NavbarComponent userCredentials={null}/>
 			<Form onSubmit={submitHandler} id="loginForm" name="loginForm">
 				<Form.Group>
 					<Form.Label>Username</Form.Label>

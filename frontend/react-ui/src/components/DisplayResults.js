@@ -3,6 +3,7 @@ import axios from "axios";
 import {Button, Form, Navbar, Container} from "react-bootstrap";
 import getLatLongFromAddress from "./getLatLongFromAddress.js";
 import mapStyles from "../resources/CustomMapStyles";
+import NavbarComponent from "./NavbarComponent";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -264,24 +265,14 @@ function DisplayResults(props) {
 
 	return (
 		<div className="verticalColumn">
-		<Container>
-			<Navbar bg="light" variant="light">
-			<Navbar.Brand>
-				Invictus
-			</Navbar.Brand>
-				<Navbar.Text>
-					Signed in as: {props.userCredentials["creds"]["username"]}
-			</Navbar.Text>
-			<Button variant="link">Sign out</Button>
-			</Navbar>
-		</Container>
-		<h1>Display Results</h1>
-		<hr/>
-		<div style={{width: "100%", height: "100%"}}>
-			<MapComponent locs={groupData} center={{lat: 13.5, lng: 75.0}}/>
-		</div>
-		<Legend/>
-		<SearchComponent onSearchHandler={updateData}/>
+			<NavbarComponent userCredentials={props.userCredentials}/>
+			<h1>Display Results</h1>
+			<hr/>
+			<div style={{width: "100%", height: "100%"}}>
+				<MapComponent locs={groupData} center={{lat: 13.5, lng: 75.0}}/>
+			</div>
+			<Legend/>
+			<SearchComponent onSearchHandler={updateData}/>
 		</div>
 	);
 }
