@@ -9,7 +9,7 @@ DROP TYPE IF EXISTS gender;
 CREATE TYPE seeker AS ENUM ('Patient', 'Caregiver');
 CREATE TYPE gender AS ENUM ('Male', 'Female');
 
-CREATE SEQUENCE hibernate_sequence START 1;
+CREATE SEQUENCE hibernate_sequence START 1000;
 
 CREATE TABLE users(id serial PRIMARY KEY,
         firstname VARCHAR(255),

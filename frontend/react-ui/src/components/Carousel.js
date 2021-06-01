@@ -15,13 +15,13 @@ const CarouselComponent = (props) => {
             <h1>Text</h1>
           </div>
           <div>
-            <img src="http://placekitten.com/g/400/200" />
+            <img src="https://i.imgur.com/FycmgXY.png" />
           </div>
           <div>
-            <img src="http://placekitten.com/g/400/200" />
+            <img src="https://i.imgur.com/z17WbHI.jpg" />
           </div>
           <div>
-            <img src="http://placekitten.com/g/400/200" />
+            <img src="https://i.imgur.com/8oywn1C.png" />
           </div>
 			</Slider>
 		</div>
