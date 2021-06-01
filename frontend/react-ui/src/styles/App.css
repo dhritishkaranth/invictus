@@ -52,3 +52,31 @@
 	justify-content: space-between;
 
 }
+
+.search-fix-width {
+	width: 1200px;
+}
+
+.Seach-Row-Horiz {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+}
+
+.Carousel-Box {
+	width: 400px;
+	height: 400px;
+	background-color: blue;
+}
+
+.Carousel-Container {
+	width: 600px;
+	height: 600px;
+	padding: 40px;
+	background: #419be0;
+}
+
+.slick-slide img {
+	margin: auto;
+  }

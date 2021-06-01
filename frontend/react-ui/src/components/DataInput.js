@@ -1,5 +1,5 @@
 import StepWizard from "react-step-wizard";
-import {ProgressBar, Button, Form, Container, Navbar} from "react-bootstrap";
+import {ProgressBar, Button, Form, Container, Navbar, Alert} from "react-bootstrap";
 import {useState} from "react";
 import axios from "axios";
 import NavbarComponent from "./NavbarComponent";
@@ -46,8 +46,8 @@ const Step1 = (props) => {
 					<Form.Label>Gender</Form.Label>
 					<Form.Control required as="select" custom name="gender">
 						<option value="" selected disabled>Please choose one</option>
-						<option value="male">Male</option>
-						<option value="female">Female</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
 						<option value="other">Other</option>
 					</Form.Control>
 					<Form.Text muted></Form.Text>
@@ -110,10 +110,12 @@ const Step2 = (props) => {
 					<Form.Label>Languages</Form.Label>
 					<Form.Control multiple required as="select" custom name="lang">
 						<option value="" selected disabled>Pick at least one</option>
-						<option value="en">English</option>
-						<option value="es">Spanish</option>
-						<option value="fr">French</option>
-						<option value="ka">Kannada</option>
+						<option value="English">English</option>
+						<option value="Spanish">Spanish / Español</option>
+						<option value="Kannada">Kannada / ಕನ್ನಡ</option>
+						<option value="Hindi">Hindi / हिन्दी</option>
+						<option value="Chinese">Chinese / 汉语</option>
+						<option value="French">French / Français</option>
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
@@ -173,9 +175,17 @@ const Step3 = (props) => {
 					<Form.Label>Illnesses</Form.Label>
 					<Form.Control required as="select" custom name="illness">
 						<option value="" selected disabled>Please choose one</option>
-						<option value="leukemia">Leukemia</option>
-						<option value="cancer">Cancer</option>
-						<option value="other">Other</option>
+
+						<option value="Alzheimers">Alzheimers</option>
+						<option value="Heart Cancer">Heart disease</option>
+						<option value="Kidney Cancer">Kidney cancer</option>
+						<option value="Leukemia">Leukemia</option>
+						<option value="Liver Cancer">Liver cancer</option>
+						<option value="Lung Cancer">Lung cancer</option>
+						<option value="Pancreatic Cancer">Pancreatic cancer</option>
+						<option value="Parkinsons">Parkinsons</option>
+						<option value="Thyroid Cancer">Thyroid cancer</option>
+
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
@@ -192,7 +202,7 @@ const Step3 = (props) => {
 					<BootstrapSwitchButton checked={curState["typeOfSeeker"] === "Patient"} onlabel={"Yes"} offlabel={"No"} onChange={onSeekerToggleChange}/>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
-				<Form.Text muted>Say yes if you are the caregiver to the patient.</Form.Text>
+				<Form.Text muted>Say no if you are the caregiver to the patient.</Form.Text>
 				<hr/>
 				<div className="button-align">
 					<Button variant="primary" className="btn-toolbar" onClick={() => props.previousStep()}>Back</Button>{' '}
@@ -225,11 +235,19 @@ const Step4 = (props) => {
 					<Button variant="primary" type="submit" className="btn-toolbar">Submit</Button>
 				</div>
 			</Form>
+			<hr/>
+			{ props.showAlert &&
+			<Alert variant="success">
+					{"Successfully created user account. You will be redirected soon."}
+			</Alert>
+			}
 		</div>
 	);
 }
 
-function DataInput(props) {
+const DataInput = (props) => {
+
+	let [showAlert, setShowAlert] = useState(false);
 
 	let s1 = {}, s2 = {}, s3 = {};
 
@@ -264,7 +282,17 @@ function DataInput(props) {
 
 		console.log("Step 4 handler from parent");
 		console.log(profileData);
-		axios.post("https://en00k5ay06pzq1l.x.pipedream.net", profileData).then(res => console.log("POST req. done", res));
+		let url = `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/invictus/v1/users`;
+		//axios.post("https://en00k5ay06pzq1l.x.pipedream.net", profileData).then(res => console.log("POST req. done", res));
+		axios.post(url, profileData, {validateStatus: false}).then((res) => {
+				console.log("User created.", res);
+				
+				setShowAlert(true);
+				setTimeout(() => {
+					props.setSignedUpState(true);
+				}, 3000);
+				
+		});
 	}
 
 	return (
@@ -276,7 +304,7 @@ function DataInput(props) {
 				<Step1 onCompleteHandler={f1Update}/>
 				<Step2 onCompleteHandler={f2Update}/>
 				<Step3 onCompleteHandler={f3Update}/>
-				<Step4 onCompleteHandler={submitHandler}/>
+				<Step4 onCompleteHandler={submitHandler} isSignedUp={props.isSignedUp} showAlert={showAlert}/>
 			</StepWizard>
 		</>
 	);

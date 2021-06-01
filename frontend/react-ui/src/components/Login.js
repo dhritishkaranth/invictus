@@ -2,6 +2,7 @@ import {React, useState} from "react";
 import {Button, Form, Alert} from "react-bootstrap";
 import axios from "axios";
 import NavbarComponent from "./NavbarComponent";
+import CarouselComponent from "./Carousel.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = (props) => {
@@ -11,15 +12,8 @@ const Login = (props) => {
 	const submitHandler = (event) => {
 		event.preventDefault();
 
-		/*
-		if (loginStatus) {
-			setloginStatus({variant: "primary", msg: "You are already logged in!"});
-			return;
-		}
-		*/
 
 		let info = {username: event.target[0].value, password: event.target[1].value};
-		//let info = {username: "ysingh", password: "ysingh"};
 		console.log("Login event: ", info);
 
 		let promise = axios.get(`${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/login`, {auth: info, validateStatus: false});
@@ -66,6 +60,11 @@ const Login = (props) => {
 	return (
 		<>
 			<NavbarComponent userCredentials={null}/>
+
+			{false && <CarouselComponent/>}
+
+			<h2 style={{paddingTop: "20px"}}>Welcome! Please sign in below.</h2>
+
 			<Form onSubmit={submitHandler} id="loginForm" name="loginForm">
 				<Form.Group>
 					<Form.Label>Username</Form.Label>
