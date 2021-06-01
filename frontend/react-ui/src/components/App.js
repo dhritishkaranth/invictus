@@ -7,14 +7,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 	let [userCredentials, setUserCredentials] = useState(null);
-
+	let [isSignedUp, setSignedUpState] = useState(false);
 	return (
 		<>
-			<DisplayResults/>
-			<Login setCredentials={setUserCredentials}/>
-			{userCredentials && 
-				<span>{userCredentials["username"]}</span>
-			}
+			{!userCredentials && <Login setSignedUpState={setSignedUpState} setCredentials={setUserCredentials}/>}
+			{userCredentials && !isSignedUp && <DataInput setSignedUpState={setSignedUpState} userCredentials={userCredentials}/>}
+			{userCredentials && isSignedUp && <DisplayResults userCredentials={userCredentials}/>}
 		</>
 	);
 }

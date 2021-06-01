@@ -1,10 +1,8 @@
 import {React, useState, useEffect, useRef} from "react";
 import axios from "axios";
-import {Button, Form, Navbar, Container} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import getLatLongFromAddress from "./getLatLongFromAddress.js";
 import mapStyles from "../resources/CustomMapStyles";
-import NavbarComponent from "./NavbarComponent";
-import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -16,8 +14,8 @@ const MapComponent = (props) => {
 	let [mapCenter, setCenter] = useState(props.center);
 
 	const containerStyle = {
-		width: "100%",
-		height: "800px"
+		width: "80%",
+		height: "600px"
 	  };
 
 	useEffect(() => {
@@ -125,9 +123,7 @@ const InfoWindowContent = (props) => {
 
 const Legend = () => {
 	return (
-		<div className="card">
-			<div className="card-body">
-			<h5 className="card-title">Legend</h5>
+		<>
 			<span style={{width: "100px"}}>
 				<img src="https://i.imgur.com/8ECigCq.png"/>
 				<span style={{textAlign: "center"}}>Groups</span>
@@ -140,53 +136,29 @@ const Legend = () => {
 				<img src="https://i.imgur.com/wZQqNcS.png"/>
 				<span style={{textAlign: "center"}}>Person</span>
 			</span>
-			</div>
-		</div>
+		</>
 	);
 }
 
 const SearchComponent = (props) => {
-	let [userToggleState, setUserToggleState] = useState(true);
-	let [groupToggleState, setGroupToggleState] = useState(true);
 
-	let userInfo = {creds: { username: "ysingh", password: "ysingh" }, location: "Brahmavar, Udupi, Karnataka"};
+	let [curState, setState] = useState({illnesses: "", languages: ""});
+
+	let info = {username: "ysingh", password: "ysingh"};
 
 	const submitHandler = (event) => {
 		event.preventDefault();
 		console.log(event);
 
-		let selectedIllness = event.target[0].value;
-		let selectedLanguage = event.target[1].value;
-
-		let data = [];
-
-		console.log(selectedIllness, selectedLanguage, userToggleState, groupToggleState);
-
-		if (userToggleState) {
-			let url = `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/invictus/v1/groups/illness/language/`;
-		}
-
-		if (groupToggleState) {
-			
-		}
-
 		let url = `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/invictus/v1/groups/illness/language/`;
 
 		//let promise = axios.get(`http://localhost:9091/invictus/v1/groups/illness/${event.target[0].value}/language/${event.target[1].value}/`, {auth: info, validateStatus: false});
-		let promise = axios.get(url, {auth: userInfo.creds, validateStatus: false});
+		let promise = axios.get(url, {auth: info, validateStatus: false});
 		promise.then(res => {
 				console.log("Search handler received: ", res.data);
 				props.onSearchHandler(res.data);
 			}
 		);
-	};
-
-	const userToggleChangeHandler = (toggleState) => {
-		setUserToggleState(toggleState);
-	};
-
-	const groupToggleChangeHandler = (toggleState) => {
-		setGroupToggleState(toggleState);
 	};
 
 	return (
@@ -214,26 +186,13 @@ const SearchComponent = (props) => {
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
-				
-				<Form.Group>
-					<Form.Label>Include groups</Form.Label>
-					<BootstrapSwitchButton checked={groupToggleState} onlabel={"Yes"} offlabel={"No"} onChange={groupToggleChangeHandler}/>
-					<Form.Text muted></Form.Text>
-				</Form.Group>
-
-				<Form.Group>
-					<Form.Label>Include users</Form.Label>
-					<BootstrapSwitchButton checked={userToggleState} onlabel={"Yes"} offlabel={"No"} onChange={userToggleChangeHandler}/>
-					<Form.Text muted></Form.Text>
-				</Form.Group>
-
 				<Button variant="primary" type="submit" className="btn-toolbar">Search</Button>
 			</Form>
 		</>
 	);
 }
 
-function DisplayResults(props) {
+function DisplayResults() {
 	let groups = [
 		{location: "Irvine, CA", type: "group", content: {title: "Kumar's home", body: "aaa"}},
 		{location: "Brahmavar, Udupi, Karnataka", type: "group", content: {title: "My hometown", body: "aaa"}},
@@ -264,16 +223,15 @@ function DisplayResults(props) {
 	};
 
 	return (
-		<div className="verticalColumn">
-			<NavbarComponent userCredentials={props.userCredentials}/>
-			<h1>Display Results</h1>
-			<hr/>
-			<div style={{width: "100%", height: "100%"}}>
-				<MapComponent locs={groupData} center={{lat: 13.5, lng: 75.0}}/>
-			</div>
-			<Legend/>
-			<SearchComponent onSearchHandler={updateData}/>
+		<>
+		<h1>Display Results</h1>
+		<hr/>
+		<div style={{width: "80%", height: "100%"}}>
+			<MapComponent locs={groupData} center={{lat: 13.5, lng: 75.0}}/>
 		</div>
+		<Legend/>
+		<SearchComponent onSearchHandler={updateData}/>
+		</>
 	);
 }
 

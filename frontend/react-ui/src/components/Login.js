@@ -1,6 +1,7 @@
 import {React, useState} from "react";
 import {Button, Form, Alert} from "react-bootstrap";
 import axios from "axios";
+import NavbarComponent from "./NavbarComponent";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = (props) => {
@@ -9,19 +10,28 @@ const Login = (props) => {
 
 	const submitHandler = (event) => {
 		event.preventDefault();
+
+		/*
 		if (loginStatus) {
 			setloginStatus({variant: "primary", msg: "You are already logged in!"});
 			return;
 		}
+		*/
+
 		let info = {username: event.target[0].value, password: event.target[1].value};
 		//let info = {username: "ysingh", password: "ysingh"};
 		console.log("Login event: ", info);
 
-		let promise = axios.get("http://localhost:9091/login", {auth: info, validateStatus: false});
+		let promise = axios.get(`${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/login`, {auth: info, validateStatus: false});
 		promise.then(res => {
 			if (res.status === 404) {
 				console.log("Invalid user");
-				setloginStatus({variant: "info", msg: "User does not exist."});
+				setloginStatus({variant: "info", msg: "This username is not taken; we will create your profile after you answer some questions."});
+				setTimeout(
+					() => {
+						props.setCredentials({creds: info});
+					},
+					4000);
 			}
 			else if (res.status === 401) {
 				console.log("Wrong password");
@@ -31,7 +41,19 @@ const Login = (props) => {
 				console.log("Auth successful");
 				console.log("login response: ", res);
 				setloginStatus({variant: "success", msg: "Authentication successful."});
-				props.setCredentials(info);
+
+				let userQuery = axios.get(`${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/invictus/v1/users/username/${info.username}`, {auth: info, validateStatus: false});
+				userQuery.then(uRes => {
+					console.log("Queried user location.");
+					console.log(uRes);
+					setTimeout(
+						() => {
+							props.setSignedUpState(true);
+							props.setCredentials({creds: info, location: uRes["data"]["location"]});
+						},
+						2000
+					);
+				});
 			}
 			else {
 				console.log("Some other state");
@@ -43,6 +65,7 @@ const Login = (props) => {
 
 	return (
 		<>
+			<NavbarComponent userCredentials={null}/>
 			<Form onSubmit={submitHandler} id="loginForm" name="loginForm">
 				<Form.Group>
 					<Form.Label>Username</Form.Label>
@@ -57,8 +80,9 @@ const Login = (props) => {
 					<Form.Text muted></Form.Text>
 				</Form.Group>
 				<hr/>
-
-				<Button variant="success" type="submit" className="btn-toolbar">Sign up or log in</Button>
+				<div className="text-center">
+				<Button variant="success" type="submit" >Sign up or log in</Button>
+				</div>
 			</Form>
 			<hr/>
 			{loginStatus &&
