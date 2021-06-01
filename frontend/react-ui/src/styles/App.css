@@ -52,3 +52,20 @@
 	justify-content: space-between;
 
 }
+
+.Carousel-Box {
+	width: 400px;
+	height: 400px;
+	background-color: blue;
+}
+
+.Carousel-Container {
+	width: 600px;
+	height: 600px;
+	padding: 40px;
+	background: #419be0;
+}
+
+.slick-slide img {
+	margin: auto;
+  }

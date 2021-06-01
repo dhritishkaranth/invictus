@@ -2,6 +2,7 @@ import {React, useState} from "react";
 import {Button, Form, Alert} from "react-bootstrap";
 import axios from "axios";
 import NavbarComponent from "./NavbarComponent";
+import CarouselComponent from "./Carousel.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = (props) => {
@@ -66,6 +67,9 @@ const Login = (props) => {
 	return (
 		<>
 			<NavbarComponent userCredentials={null}/>
+
+			{false && <CarouselComponent/>}
+
 			<Form onSubmit={submitHandler} id="loginForm" name="loginForm">
 				<Form.Group>
 					<Form.Label>Username</Form.Label>

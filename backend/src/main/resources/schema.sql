@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS groups;
+DROP SEQUENCE IF EXISTS hibernate_sequence;
 
 DROP TYPE IF EXISTS seeker;
 DROP TYPE IF EXISTS gender;
@@ -7,6 +8,8 @@ DROP TYPE IF EXISTS gender;
 
 CREATE TYPE seeker AS ENUM ('Patient', 'Caregiver');
 CREATE TYPE gender AS ENUM ('Male', 'Female');
+
+CREATE SEQUENCE hibernate_sequence START 1;
 
 CREATE TABLE users(id serial PRIMARY KEY,
         firstname VARCHAR(255),
