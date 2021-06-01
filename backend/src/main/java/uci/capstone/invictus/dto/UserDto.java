@@ -34,10 +34,8 @@ public class UserDto {
 
     private List<String> resources;
 
-    @JsonIgnore
     private String password;
 
-    @JsonIgnore
     private String role;
 }
 

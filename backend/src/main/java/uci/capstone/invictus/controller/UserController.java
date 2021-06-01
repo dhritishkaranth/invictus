@@ -3,6 +3,7 @@ package uci.capstone.invictus.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import uci.capstone.invictus.dto.UserDto;
 import uci.capstone.invictus.entity.User;
@@ -23,6 +24,8 @@ public class UserController {
     @Autowired
     private ModelMapper modelMapper;
 
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -40,7 +43,11 @@ public class UserController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody UserDto userDto) {
-        userService.createUser(convertToEntity(userDto));
+        User user = convertToEntity(userDto);
+        user.setPassword(encoder.encode(userDto.getPassword()));
+        if(null == userDto.getRole())
+            user.setRole("USER");
+        userService.createUser(user);
     }
 
     @GetMapping("/firstname/{name}")
@@ -249,7 +256,10 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void updateUser(@RequestBody UserDto userDto){
-        userService.update(convertToEntity(userDto));
+        User user = convertToEntity(userDto);
+        if(null!=userDto.getPassword())
+            user.setPassword(encoder.encode(userDto.getPassword()));
+        userService.update(user);
     }
 
     @GetMapping("/aggregator/seeker")
