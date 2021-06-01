@@ -172,7 +172,7 @@ public class UserService {
 
     public void update(User newUser){
 
-        repository.findById(newUser.getId())
+        repository.findByUsername(newUser.getUsername())
                 .map(user -> {
                     user.setFirstName(newUser.getFirstName());
                     user.setSecondName(newUser.getSecondName());
