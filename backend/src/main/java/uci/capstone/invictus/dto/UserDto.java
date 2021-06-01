@@ -1,5 +1,6 @@
 package uci.capstone.invictus.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import uci.capstone.invictus.utils.Constants;
 
@@ -32,5 +33,11 @@ public class UserDto {
     private Constants.Gender gender;
 
     private List<String> resources;
+
+    @JsonIgnore
+    private String password;
+
+    @JsonIgnore
+    private String role;
 }
 
