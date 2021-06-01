@@ -31,6 +31,7 @@ public class UserController {
 
         return users.stream()
                 .filter(user -> !user.isAnonymous())
+                .filter(user -> user.getRole()!="ADMIN")
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
