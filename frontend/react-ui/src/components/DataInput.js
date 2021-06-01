@@ -175,9 +175,17 @@ const Step3 = (props) => {
 					<Form.Label>Illnesses</Form.Label>
 					<Form.Control required as="select" custom name="illness">
 						<option value="" selected disabled>Please choose one</option>
-						<option value="leukemia">Leukemia</option>
-						<option value="cancer">Cancer</option>
-						<option value="other">Other</option>
+
+						<option value="Alzheimers">Alzheimers</option>
+						<option value="Heart Cancer">Heart disease</option>
+						<option value="Kidney Cancer">Kidney cancer</option>
+						<option value="Leukemia">Leukemia</option>
+						<option value="Liver Cancer">Liver cancer</option>
+						<option value="Lung Cancer">Lung cancer</option>
+						<option value="Pancreatic Cancer">Pancreatic cancer</option>
+						<option value="Parkinsons">Parkinsons</option>
+						<option value="Thyroid Cancer">Thyroid cancer</option>
+
 					</Form.Control>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
@@ -194,7 +202,7 @@ const Step3 = (props) => {
 					<BootstrapSwitchButton checked={curState["typeOfSeeker"] === "Patient"} onlabel={"Yes"} offlabel={"No"} onChange={onSeekerToggleChange}/>
 					<Form.Text muted></Form.Text>
 				</Form.Group>
-				<Form.Text muted>Say yes if you are the caregiver to the patient.</Form.Text>
+				<Form.Text muted>Say no if you are the caregiver to the patient.</Form.Text>
 				<hr/>
 				<div className="button-align">
 					<Button variant="primary" className="btn-toolbar" onClick={() => props.previousStep()}>Back</Button>{' '}

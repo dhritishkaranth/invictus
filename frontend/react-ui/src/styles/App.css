@@ -53,6 +53,17 @@
 
 }
 
+.search-fix-width {
+	width: 1200px;
+}
+
+.Seach-Row-Horiz {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+}
+
 .Carousel-Box {
 	width: 400px;
 	height: 400px;
