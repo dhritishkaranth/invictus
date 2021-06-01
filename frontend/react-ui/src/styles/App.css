@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+.verticalColumn {
+	width: 60%;
+	display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+
+.Wizard-Step {
+	width: 300px;
+}
+
+.Row-Horiz-Spread {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+}
