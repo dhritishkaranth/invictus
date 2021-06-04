@@ -20,7 +20,7 @@ const Login = (props) => {
 		promise.then(res => {
 			if (res.status === 404) {
 				console.log("Invalid user");
-				setloginStatus({variant: "info", msg: "This username is not taken; we will create your profile after you answer some questions."});
+				setloginStatus({variant: "info", msg: "This username is not taken. We will create your profile after you answer some questions."});
 				setTimeout(
 					() => {
 						props.setCredentials({creds: info});
@@ -87,7 +87,7 @@ const Login = (props) => {
 
 				<hr/>
 				{loginStatus &&
-				<Alert variant={loginStatus["variant"]}>
+				<Alert className="text-center" style={{width: "200px"}} variant={loginStatus["variant"]}>
 					{`${loginStatus["msg"]}`}
 				</Alert>
 			}
