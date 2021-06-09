@@ -11,7 +11,7 @@ function App() {
 	return (
 		<>
 			{!userCredentials && <Login setSignedUpState={setSignedUpState} setCredentials={setUserCredentials}/>}
-			{userCredentials && !isSignedUp && <DataInput setSignedUpState={setSignedUpState} userCredentials={userCredentials}/>}
+			{userCredentials && !isSignedUp && <DataInput setSignedUpState={setSignedUpState} userCredentials={userCredentials} setCredentials={setUserCredentials}/>}
 			{userCredentials && isSignedUp && <DisplayResults userCredentials={userCredentials}/>}
 		</>
 	);

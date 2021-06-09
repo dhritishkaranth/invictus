@@ -177,6 +177,7 @@ const SearchComponent = (props) => {
 
 		let promise = getLatLongFromAddress(userInfo.location);
 		promise.then(res => {
+			//console.log("Geocode res: ", res);
 			setTimeout(() => {
 			props.onSearchHandler((prevData) => {
 				let newData = {...prevData};
@@ -214,6 +215,7 @@ const SearchComponent = (props) => {
 					Promise.all(promArr).then(values => {
 						let newData = {};
 						for (let i = 0; i < values.length; ++i) {
+							//console.log(values[i]);
 							newData[recData[i].locStr] = {...recData[i], latLon: values[i].data.results[0].geometry.location};
 						}
 						console.log(newData);
@@ -251,7 +253,11 @@ const SearchComponent = (props) => {
 					Promise.all(promArr).then(values => {
 						let newData = {};
 						for (let i = 0; i < values.length; ++i) {
-							newData[recData[i].locStr] = {...recData[i], latLon: values[i].data.results[0].geometry.location};
+							if (values[i].data.results[0].geometry.location !== null)
+								newData[recData[i].locStr] = {...recData[i], latLon: values[i].data.results[0].geometry.location};
+							else {
+								console.log("Null value detected. Continuing...");
+							}
 						}
 						console.log(newData);
 						props.onSearchHandler((prevData) => {
@@ -344,7 +350,7 @@ function DisplayResults(props) {
 	return (
 		<div className="verticalColumn">
 			<NavbarComponent userCredentials={props.userCredentials}/>
-			<h1>Display Results</h1>
+			<h3 style={{paddingTop: "20px"}}>Search for groups and persons</h3>
 			<hr/>
 			<SearchComponent onSearchHandler={setMarkerData} userCredentials={props.userCredentials}/>
 			<hr/>

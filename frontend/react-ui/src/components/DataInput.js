@@ -283,13 +283,13 @@ const DataInput = (props) => {
 		console.log("Step 4 handler from parent");
 		console.log(profileData);
 		let url = `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/invictus/v1/users`;
-		//axios.post("https://en00k5ay06pzq1l.x.pipedream.net", profileData).then(res => console.log("POST req. done", res));
 		axios.post(url, profileData, {validateStatus: false}).then((res) => {
 				console.log("User created.", res);
 				
 				setShowAlert(true);
 				setTimeout(() => {
 					props.setSignedUpState(true);
+					props.setCredentials({creds: {username: profileData.username, password: profileData.password}, location: profileData.location});
 				}, 3000);
 				
 		});

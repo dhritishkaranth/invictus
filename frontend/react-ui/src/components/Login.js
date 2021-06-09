@@ -20,7 +20,7 @@ const Login = (props) => {
 		promise.then(res => {
 			if (res.status === 404) {
 				console.log("Invalid user");
-				setloginStatus({variant: "info", msg: "This username is not taken; we will create your profile after you answer some questions."});
+				setloginStatus({variant: "info", msg: "This username is not taken. We will create your profile after you answer some questions."});
 				setTimeout(
 					() => {
 						props.setCredentials({creds: info});
@@ -61,9 +61,11 @@ const Login = (props) => {
 		<>
 			<NavbarComponent userCredentials={null}/>
 
-			{false && <CarouselComponent/>}
+			<h3 style={{paddingTop: "20px", paddingBottom: "50px"}}>Welcome! Please sign in below.</h3>
 
-			<h2 style={{paddingTop: "20px"}}>Welcome! Please sign in below.</h2>
+			<div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", maxWidth: "1000px"}}>
+
+			<img style={{width: "300px", height: "175px", marginRight: "200px"}} src="https://i.imgur.com/FycmgXY.png"></img>
 
 			<Form onSubmit={submitHandler} id="loginForm" name="loginForm">
 				<Form.Group>
@@ -82,13 +84,15 @@ const Login = (props) => {
 				<div className="text-center">
 				<Button variant="success" type="submit" >Sign up or log in</Button>
 				</div>
-			</Form>
-			<hr/>
-			{loginStatus &&
-				<Alert variant={loginStatus["variant"]}>
+
+				<hr/>
+				{loginStatus &&
+				<Alert className="text-center" style={{width: "200px"}} variant={loginStatus["variant"]}>
 					{`${loginStatus["msg"]}`}
 				</Alert>
 			}
+			</Form>
+			</div>
 		</>
 	);
 };
