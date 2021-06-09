@@ -1,5 +1,9 @@
 package uci.capstone.invictus.service;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uci.capstone.invictus.entity.Group;
@@ -10,7 +14,14 @@ import uci.capstone.invictus.exception.RepositoryException;
 import uci.capstone.invictus.exception.UserNotFoundException;
 import uci.capstone.invictus.repository.GroupRepository;
 import uci.capstone.invictus.repository.UserRepository;
+import uci.capstone.invictus.utils.Constants;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,7 +56,7 @@ public class GroupService {
 
     public void save(Group group){
         try {
-            groupRepository.save(group);
+            groupRepository.save(getLocationCoordinates(group));
         }
         catch (Exception e){
             throw new RepositoryException(e.getLocalizedMessage());
@@ -142,10 +153,72 @@ public class GroupService {
                     group.setTypeOfIllness(newGroup.getTypeOfIllness());
                     group.setResources(newGroup.getResources());
 
-                    return groupRepository.save(group);
+                    return groupRepository.save(getLocationCoordinates(group));
                 })
                 .orElseGet(() -> {
-                    return groupRepository.save(newGroup);
+                    return groupRepository.save(getLocationCoordinates(newGroup));
                 });
+    }
+
+    private Group getLocationCoordinates(Group group){
+
+        URL url = null;
+        StringBuffer content = null;
+
+
+        String key = System.getenv("GOOGLE_API_KEY");
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("address", group.getLocation());
+        parameters.put("key", key);
+
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/geocode/json?" + Constants.getParamsString(parameters));
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+            int status = con.getResponseCode();
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+
+
+
+            con.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+
+        JSONParser parse = new JSONParser();
+
+        try {
+            JSONObject obj = (JSONObject)parse.parse(content.toString());
+            JSONArray results = (JSONArray) obj.get("results");
+
+            JSONObject result = (JSONObject) results.get(0);
+
+            JSONObject geometry = (JSONObject) result.get("geometry");
+            JSONObject coordinates = (JSONObject) geometry.get("location");
+
+            double lngvalue = (double) coordinates.get("lng");
+
+            double latvalue = (double) coordinates.get("lat");
+
+            group.setLat(latvalue);
+            group.setLng(lngvalue);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return group;
     }
 }

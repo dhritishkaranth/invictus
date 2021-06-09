@@ -1,10 +1,22 @@
 package uci.capstone.invictus.service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uci.capstone.invictus.entity.Pair;
@@ -30,7 +42,7 @@ public class UserService {
 
     public void createUser(User user){
         try {
-            repository.save(user);
+            repository.save(getLocationCoordinates(user));
         }
         catch(Exception e){
             throw new RepositoryException(e.getMessage());
@@ -181,11 +193,74 @@ public class UserService {
                     user.setLanguages(newUser.getLanguages());
                     user.setLocation(newUser.getLocation());
                     user.setTypeOfIllness(newUser.getTypeOfIllness());
-                    return repository.save(user);
+                    return repository.save(getLocationCoordinates(user));
                 })
                 .orElseGet(() -> {
-                    return repository.save(newUser);
+                    return repository.save(getLocationCoordinates(newUser));
                 });
+    }
+
+
+    private User getLocationCoordinates(User user){
+
+        URL url = null;
+        StringBuffer content = null;
+
+
+        String key = System.getenv("GOOGLE_API_KEY");
+
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("address", user.getLocation());
+        parameters.put("key", key);
+
+        try {
+            url = new URL("https://maps.googleapis.com/maps/api/geocode/json?" + Constants.getParamsString(parameters));
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+
+            int status = con.getResponseCode();
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+
+
+
+            con.disconnect();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
+
+        JSONParser parse = new JSONParser();
+
+        try {
+            JSONObject obj = (JSONObject)parse.parse(content.toString());
+            JSONArray results = (JSONArray) obj.get("results");
+
+            JSONObject result = (JSONObject) results.get(0);
+
+            JSONObject geometry = (JSONObject) result.get("geometry");
+            JSONObject coordinates = (JSONObject) geometry.get("location");
+
+            double lngvalue = (double) coordinates.get("lng");
+
+            double latvalue = (double) coordinates.get("lat");
+
+            user.setLat(latvalue);
+            user.setLng(lngvalue);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
 }

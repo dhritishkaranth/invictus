@@ -20,4 +20,8 @@ public class GroupDto{
     private String typeOfIllness;
 
     private List<String> resources;
+
+    private double lat;
+
+    private double lng;
 }
