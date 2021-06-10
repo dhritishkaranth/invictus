@@ -40,5 +40,9 @@ public class UserDto {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String role;
+
+    private double lat;
+
+    private double lng;
 }
 

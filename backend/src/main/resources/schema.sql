@@ -24,11 +24,15 @@ CREATE TABLE users(id serial PRIMARY KEY,
         anonymous BOOLEAN,
         resources text[],
         password VARCHAR(255),
-        role VARCHAR(255) DEFAULT 'USER');
+        role VARCHAR(255) DEFAULT 'USER',
+        lat DOUBLE PRECISION DEFAULT 0.0,
+        lng DOUBLE PRECISION DEFAULT 0.0);
 
 CREATE TABLE groups(id serial PRIMARY KEY,
         groupname VARCHAR(255) UNIQUE,
         languages text[],
         location VARCHAR(255),
         typeOfIllness VARCHAR(255),
-        resources text[]);
+        resources text[],
+        lat DOUBLE PRECISION DEFAULT 0.0,
+        lng DOUBLE PRECISION DEFAULT 0.0);
