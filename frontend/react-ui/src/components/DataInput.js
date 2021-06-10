@@ -289,7 +289,11 @@ const DataInput = (props) => {
 				setShowAlert(true);
 				setTimeout(() => {
 					props.setSignedUpState(true);
-					props.setCredentials({creds: {username: profileData.username, password: profileData.password}, location: profileData.location});
+					let userUrl = `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_DOMAIN}/invictus/v1/users/username/${profileData.username}`;
+					let userProm = axios.get(userUrl, {auth: {username: profileData.username, password: profileData.password}, validateStatus: false});
+					userProm.then(res => {
+						props.setCredentials({creds: {username: profileData.username, password: profileData.password}, location: { loc: profileData.location, lat: res.data.lat, lng: res.data.lng}});
+					});
 				}, 3000);
 				
 		});

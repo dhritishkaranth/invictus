@@ -43,7 +43,7 @@ const Login = (props) => {
 					setTimeout(
 						() => {
 							props.setSignedUpState(true);
-							props.setCredentials({creds: info, location: uRes["data"]["location"]});
+							props.setCredentials({creds: info, location: {loc: uRes["data"]["location"], lat: uRes["data"]["lat"], lng: uRes["data"]["lng"]}});
 						},
 						2000
 					);
