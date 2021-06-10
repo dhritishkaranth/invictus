@@ -124,7 +124,7 @@ const InfoWindowContent = (props) => {
 				{`${props.content.body}`}
 			</div>
 			<div>
-				<a href={props.content.body} target="_blank">Social media profile</a>
+				<a href={props.content.link} target="_blank">Social media profile</a>
 			</div>
 		</>
 	);
@@ -175,6 +175,19 @@ const SearchComponent = (props) => {
 
 		props.onSearchHandler({});
 
+		setTimeout(() => {
+			props.onSearchHandler((prevData) => {
+				let newData = {...prevData};
+				newData[userInfo.location.loc] = {type: "home", latLon: {lat: userInfo.location.lat, lng: userInfo.location.lng}, InfoContent: {title: "Your location", body: ""}};
+				//console.log("Udata: ", newData);
+				//console.log("creds", props.userCredentials);
+				//console.log("item: ", {type: "home", latLon: {lat: userInfo.location.lat, lng: userInfo.location.lng}, InfoContent: {title: "Your location", body: ""}});
+				return newData;
+		})}, 750);
+
+
+		/*
+
 		let promise = getLatLongFromAddress(userInfo.location);
 		promise.then(res => {
 			//console.log("Geocode res: ", res);
@@ -186,6 +199,7 @@ const SearchComponent = (props) => {
 			});
 			}, 2000);
 		});
+		*/
 
 		
 
@@ -206,7 +220,26 @@ const SearchComponent = (props) => {
 			promise.then(res => {
 					console.log("Search handler for groups received: ", res.data);
 					let promArr = [];
-					let recData = [];
+					let groupData = {};
+
+					for (let item of res.data) {
+						let infoContent =  {
+							title: item.groupName,
+							link: item.resources[0],
+							body: ""
+						};
+						groupData[item.location] = {type: "group", locStr: item.location, InfoContent: infoContent, latLon: {lat: item.lat, lng: item.lng}};
+					}
+
+					setTimeout(() => {
+						props.onSearchHandler((prevData) => {
+							return {...prevData, ...groupData};
+						});
+					}, 250);
+
+					
+
+					/*
 					for (let item of res.data) {
 						let locPromise = getLatLongFromAddress(item.location);
 						promArr.push(locPromise);
@@ -223,6 +256,7 @@ const SearchComponent = (props) => {
 							return {...prevData, ...newData};
 						});
 					});
+					*/
 				}
 			);
 		}
@@ -244,7 +278,24 @@ const SearchComponent = (props) => {
 					console.log("Search handler for users received: ", res.data);
 					
 					let promArr = [];
-					let recData = [];
+					let userData = {};
+
+					for (let item of res.data) {
+						let infoContent =  {
+							title: item.username,
+							link: item.resources[0],
+							body: `Gender: ${item.gender}, Type of user: ${item.typeOfSeeker}`
+						};
+						userData[item.location] = {type: "person", locStr: item.location, InfoContent: infoContent, latLon: {lat: item.lat, lng: item.lng}};
+					}
+
+					setTimeout(() => {
+						props.onSearchHandler((prevData) => {
+							return {...prevData, ...userData};
+						});
+					}, 500);
+
+					/*
 					for (let item of res.data) {
 						let locPromise = getLatLongFromAddress(item.location);
 						promArr.push(locPromise);
@@ -264,10 +315,10 @@ const SearchComponent = (props) => {
 							return {...prevData, ...newData};
 						});
 					});
+					*/
 				}
 			);
 		}
-
 	};
 
 	const userToggleChangeHandler = (toggleState) => {
