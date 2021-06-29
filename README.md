@@ -71,7 +71,7 @@ When producing builds for actual deployment, remember to use API keys that are r
 
 You will need the Geocoding API as well as the Maps Javascript API enabled.
 
-# Misc.
+## Misc.
 
 The `./infra` directory contains a script that can be used to load dummy data in bulk into the backend. It reads data from `groups.txt` and `users.txt` and fires off API calls to the backend (whose URL is hardcoded) to create those users and groups. Requires Python 3.
 
