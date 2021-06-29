@@ -61,6 +61,20 @@ java -Dspring.datasource.url=jdbc:postgresql://localhost:5432/invictus -Dspring.
  
 Here, replace the values for the parameters as needed (DB connection string should be the same, the username and password are the same used during database creation).
 
+## To setup Backend as a standalone
+The backend has developed in Java using SpringBoot framework and is a maven project. 
+The code can be imported into IntelliJ or Eclipse IDE.
+
+To run the application, a database connection is required. Postgres is used as the datasource.
+Create a database and start the postgres server. 
+The required parameters can be set in the application.properties 
+
+Another variable GOOGLE_API_KEY should be provided in the environment variable.
+
+To test the REST calls, use POSTMAN
+Example REST call: http://127.0.0.1:9091/invictus/v1/users/ - to get all the users
+
+
 ## Google Maps API
 
 You need to sign up for [Google Cloud](https://cloud.google.com). You may be asked for credit card information, but the usage for development purposes should be well below the charging threshold.
