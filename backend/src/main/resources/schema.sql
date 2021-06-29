@@ -36,3 +36,6 @@ CREATE TABLE groups(id serial PRIMARY KEY,
         resources text[],
         lat DOUBLE PRECISION DEFAULT 0.0,
         lng DOUBLE PRECISION DEFAULT 0.0);
+
+INSERT INTO users( firstname, secondname, username, age, gender, languages, location, typeOfIllness, typeOfSeeker, anonymous, resources, password, role)
+VALUES ('admin','admin', 'admin', 40, 'Male', '{English}', 'Mumbai', 'admin', 'Caregiver', true, '{"http://facebook.com/admin"}', '$2a$10$QgU2lTZyBwMvvZyqeosiSu2s6j5geofdkDi33x5LyR5GJZnhuvHG.', 'ADMIN');

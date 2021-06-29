@@ -1,0 +1,24 @@
+Lung Cancer Support,{English, French}, Cincinnati,OH, Lung Cancer, http://facebook.com/lcohio
+Metastatic Cancer Illinois Support,{Hindi, English}, Detroit,IL, Metastatic Cancer, http://facebook.com/metastaticgroup
+Pancreatic Cancer Santa Clara,{English, Spanish}, Santa Clara,CA, Pancreatic Cancer, http://facebook.com/scgroup
+Liver Cancer Support,{Hindi,English}, Phoenix,TX, Liver Cancer, http://facebook.com/phoenixliver
+Kidney Cancer Kentucky Support,{English,French}, Lexington,KY, Kidney Cancer, http://facebook.com/kentuckyKidney
+Cancer Support for Kids,{English, French, Spanish}, Seattle,WA, Lung Cancer, http://facebook.com/seattlegroup
+Thyroid Cancer Support,{English, Spanish}, Albuquerque,NM, Thyroid Cancer, http://facebook.com/tycancer
+Parkinsons Support,{French, English}, Chicago,IL, Metastatic Cancer, http://facebook.com/metastaticgroup
+Alzheimers,{English, Hindi, Kannada}, Santa Clara,CA, Pancreatic Cancer, http://facebook.com/scgroup
+Leukemia,{Chinese,English}, Phoenix,TX, Liver Cancer, http://facebook.com/phoenixliver
+Heart diseases association,{English,Chinese}, Lexington,KY, Kidney Cancer, http://facebook.com/kentuckyKidney
+Liver Cancer,{English, French, Kannada}, Seattle,WA, Lung Cancer, http://facebook.com/seattlegroup
+Oxygen,{English, Chinese}, Columbus,OH, Lung Cancer, http://facebook.com/oxygen
+Maryland women support,{Hindi, English, Kannada}, College Park,MD, Metastatic Cancer, http://facebook.com/metastaticgroup
+Association of senile,{English, Spanish}, Green Bay,WI, Alzheimers, http://facebook.com/senile
+Friends association for Cancer,{Spanish,English}, Rapid City,SD, Liver Cancer, http://facebook.com/friends
+Homeless Kidney Cancer Support,{English,French, Chinese}, Orlando,FL, Kidney Cancer, http://facebook.com/kidneyhomeless
+New York Cancer Support Association,{English, French, Spanish}, Brooklyn,NY, Lung Cancer, http://facebook.com/nygroup
+Nevada Thyroid Cancer Support,{English, Spanish}, Reno,NV, Thyroid Cancer, http://facebook.com/sincity
+Native Parkinsons Support,{Spanish, English}, Chicago,IL, Parkinsons, http://facebook.com/metastaticgroup
+Spanish Alzheimers Association,{English, Spanish}, San Diego,CA, Alzheimers, http://facebook.com/apnalz
+Young Leukemia Patients,{Hindi,English}, Portland,OR, Leukemia, http://facebook.com/youngblood
+Young heart diseases association,{English,French}, Des Moines,IA, Heart Cancer, http://facebook.com/youngheart
+Kidney Cancer for adults,{English, French, Spanish}, Columbia,MO, Kidney Cancer, http://facebook.com/kidneykids
