@@ -382,21 +382,11 @@ const SearchComponent = (props) => {
 }
 
 function DisplayResults(props) {
-	/*
-	let groups = [
-		{location: "Irvine, CA", type: "group", content: {title: "Kumar's home", body: "aaa"}},
-		{location: "Brahmavar, Udupi, Karnataka", type: "group", content: {title: "My hometown", body: "aaa"}},
-		{location: "Kundapura, Karnataka", type: "group", content: {title: "Shetty Lunch home", body: "aaa"}},
-		{location: "Manipal, Karnataka", type: "person", content: {title: "Someone's home", body: "aaa"}},
-		{location: "Udupi, Karnataka", type: "person", content: {title: "Someone's home", body: "aaa"}},
-		{location: "Baikady, Karnataka", type: "home", content: {title: "My home", body: "aaa"}}
-	];
-	*/
+
 	let groups = [{location: props.userCredentials["location"], type: "home", content: {title: "Your location", body: ""}}];
 	
 	let [markerData, setMarkerData] = useState({});
 
-	//{lat: 13.5, lng: 75.0}
 
 	return (
 		<div className="verticalColumn">
